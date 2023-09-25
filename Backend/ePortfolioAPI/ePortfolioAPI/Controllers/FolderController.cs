@@ -1,6 +1,7 @@
 ﻿using ePortfolioAPI.Data.Models;
 using ePortfolioAPI.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ePortfolioAPI.Controllers
 {
@@ -17,31 +18,61 @@ namespace ePortfolioAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Folder>>> Get()
         {
-
+            return Ok(await _dbContext.Folders.ToListAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<List<Folder>>> Get(int id)
         {
-
+            var folder = await _dbContext.Folders.FindAsync(id);
+            if (folder == null)
+            {
+                return BadRequest("Folder not found.");
+            }
+            return Ok(folder);
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Folder>>> Post()
+        public async Task<ActionResult<List<Folder>>> Post(Folder folder)
         {
-
+            var folders = await _dbContext.Folders.ToListAsync();
+            int max = 0;
+            foreach (var item in folders)
+            {
+                if (item.Id > max) max = item.Id;
+            }
+            folder.Id = max + 1;
+            _dbContext.Folders.Add(folder);
+            await _dbContext.SaveChangesAsync();
+            return Ok(await _dbContext.Folders.ToListAsync());
         }
 
         [HttpPut]
-        public async Task<ActionResult<List<Folder>>> Put()
+        public async Task<ActionResult<List<Folder>>> Put(Folder req)
         {
+            var dbFolder = await _dbContext.Folders.FindAsync(req.Id);
+            if (dbFolder == null)
+                return BadRequest("Folder not found");
 
+            dbFolder.Id = req.Id;
+            dbFolder.Name = req.Name;
+            dbFolder.IsPublic = req.IsPublic;
+            dbFolder.Description = req.Description;
+            
+
+            await _dbContext.SaveChangesAsync();
+            return Ok(await _dbContext.Folders.ToListAsync());
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Folder>>> Delete(int id)
         {
-
+            var dbFolder = await _dbContext.Folders.FindAsync(id);
+            if (dbFolder == null)
+                return BadRequest("Folder not found");
+            _dbContext.Folders.Remove(dbFolder);
+            await _dbContext.SaveChangesAsync();
+            return Ok(await _dbContext.Folders.ToListAsync());
         }
     }
 }
