@@ -5,15 +5,47 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Microsoft.EntituFrameworkCore.SqlServer
 // dotnet tool install --global dotnet-ef
-
+// Add services to the container.
+var policyName = "_myAllowSpecificOrigins";
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<PostDBContext>();
+builder.Services.AddDbContext<PostDBContext>(o =>
+{
+    //o.UseMySQL(builder.Configuration.GetConnectionString("recyclathon"));
+});
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: policyName,
+                      builder =>
+                      {
+                          builder
+                            .AllowAnyOrigin()
+                            .WithMethods("GET")
+                            .WithMethods("DELETE")
+                            .WithMethods("POST")
+                            .WithMethods("PUT")
+                            .AllowAnyHeader();
+                      });
+});
 
 var app = builder.Build();
 
-app.UseRouting();
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
 app.MapControllers();
+
+app.UseCors(policyName);
 
 app.Run();
