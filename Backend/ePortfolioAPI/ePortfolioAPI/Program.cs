@@ -3,16 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Microsoft.EntituFrameworkCore.SqlServer
-// dotnet tool install --global dotnet-ef
-// Add services to the container.
 var policyName = "_myAllowSpecificOrigins";
 builder.Services.AddControllers();
-
-builder.Services.AddDbContext<PostDBContext>(o =>
-{
-    //o.UseMySQL(builder.Configuration.GetConnectionString("recyclathon"));
-});
+builder.Services.AddDbContext<PostDBContext>(
+    o =>{
+    o.UseMySQL(builder.Configuration.GetConnectionString("recyclathon"));
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

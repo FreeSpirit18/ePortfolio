@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ePortfolioAPI.Controllers
 {
-    [Route("API/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class FolderController : ControllerBase
     {

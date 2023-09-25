@@ -1,11 +1,11 @@
-﻿using ePortfolioAPI.Data;
-using ePortfolioAPI.Data.Models;
+﻿using ePortfolioAPI.Data.Models;
+using ePortfolioAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ePortfolioAPI.Controllers
 {
-    [Route("API/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -57,6 +57,7 @@ namespace ePortfolioAPI.Controllers
             dbUser.Id = req.Id;
             dbUser.Email = req.Email;
             dbUser.Password = req.Password;
+
 
             await _dbContext.SaveChangesAsync();
             return Ok(await _dbContext.Users.ToListAsync());
