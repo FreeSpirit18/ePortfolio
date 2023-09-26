@@ -18,13 +18,13 @@ namespace ePortfolioAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Post>>> Get()
         {
-            return Ok(await _dbContext.Posts.ToListAsync());
+            return Ok(await _dbContext.Post.ToListAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<List<Post>>> Get(int id)
         {
-            var post = await _dbContext.Posts.FindAsync(id);
+            var post = await _dbContext.Post.FindAsync(id);
             if (post == null)
             {
                 return BadRequest("Post not found.");
@@ -35,22 +35,22 @@ namespace ePortfolioAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Post>>> Post(Post post)
         {
-            var posts = await _dbContext.Posts.ToListAsync();
+            var posts = await _dbContext.Post.ToListAsync();
             int max = 0;
             foreach (var item in posts)
             {
                 if (item.Id > max) max = item.Id;
             }
             post.Id = max + 1;
-            _dbContext.Posts.Add(post);
+            _dbContext.Post.Add(post);
             await _dbContext.SaveChangesAsync();
-            return Ok(await _dbContext.Posts.ToListAsync());
+            return Ok(await _dbContext.Post.ToListAsync());
         }
 
         [HttpPut]
         public async Task<ActionResult<List<Post>>> Put(Post req)
         {
-            var dbPost = await _dbContext.Posts.FindAsync(req.Id);
+            var dbPost = await _dbContext.Post.FindAsync(req.Id);
             if (dbPost == null)
                 return BadRequest("Post not found");
 
@@ -59,20 +59,21 @@ namespace ePortfolioAPI.Controllers
             dbPost.OwnerId = req.OwnerId;
             dbPost.Location = req.Location;
             dbPost.Description = req.Description;
+            dbPost.CreationDate = DateTime.Now;
 
             await _dbContext.SaveChangesAsync();
-            return Ok(await _dbContext.Posts.ToListAsync());
+            return Ok(await _dbContext.Post.ToListAsync());
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Post>>> Delete(int id)
         {
-            var dbPost = await _dbContext.Posts.FindAsync(id);
+            var dbPost = await _dbContext.Post.FindAsync(id);
             if (dbPost == null)
                 return BadRequest("Post not found");
-            _dbContext.Posts.Remove(dbPost);
+            _dbContext.Post.Remove(dbPost);
             await _dbContext.SaveChangesAsync();
-            return Ok(await _dbContext.Posts.ToListAsync());
+            return Ok(await _dbContext.Post.ToListAsync());
         }
     }
 }

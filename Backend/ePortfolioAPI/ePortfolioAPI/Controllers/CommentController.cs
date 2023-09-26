@@ -18,13 +18,13 @@ namespace ePortfolioAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Comment>>> Get()
         {
-            return Ok(await _dbContext.Comments.ToListAsync());
+            return Ok(await _dbContext.Comment.ToListAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<List<Comment>>> Get(int id)
         {
-            var comment = await _dbContext.Comments.FindAsync(id);
+            var comment = await _dbContext.Comment.FindAsync(id);
             if (comment == null)
             {
                 return BadRequest("Comment not found.");
@@ -35,22 +35,22 @@ namespace ePortfolioAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Comment>>> Post(Comment comment)
         {
-            var comments = await _dbContext.Comments.ToListAsync();
+            var comments = await _dbContext.Comment.ToListAsync();
             int max = 0;
             foreach (var item in comments)
             {
                 if(item.Id > max) max = item.Id;
             }
             comment.Id = max + 1;
-            _dbContext.Comments.Add(comment);
+            _dbContext.Comment.Add(comment);
             await _dbContext.SaveChangesAsync();
-            return Ok(await _dbContext.Comments.ToListAsync());
+            return Ok(await _dbContext.Comment.ToListAsync());
         }
 
         [HttpPut]
         public async Task<ActionResult<List<Comment>>> Put(Comment req)
         {
-            var dbComment = await _dbContext.Comments.FindAsync(req.Id);
+            var dbComment = await _dbContext.Comment.FindAsync(req.Id);
             if (dbComment == null)
                 return BadRequest("Comment not found");
 
@@ -59,20 +59,21 @@ namespace ePortfolioAPI.Controllers
             dbComment.SubjectId = req.SubjectId;
             dbComment.CreationDate = req.CreationDate;
             dbComment.Content = req.Content;
+            dbComment.CreationDate = DateTime.Now;
 
             await _dbContext.SaveChangesAsync();
-            return Ok(await _dbContext.Comments.ToListAsync());
+            return Ok(await _dbContext.Comment.ToListAsync());
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Comment>>> Delete(int id)
         {
-            var dbComment = await _dbContext.Comments.FindAsync(id);
+            var dbComment = await _dbContext.Comment.FindAsync(id);
             if (dbComment == null)
                 return BadRequest("Comment not found");
-            _dbContext.Comments.Remove(dbComment);
+            _dbContext.Comment.Remove(dbComment);
             await _dbContext.SaveChangesAsync();
-            return Ok(await _dbContext.Comments.ToListAsync());
+            return Ok(await _dbContext.Comment.ToListAsync());
         }
     }
 }

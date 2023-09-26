@@ -18,13 +18,13 @@ namespace ePortfolioAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Tag>>> Get()
         {
-            return Ok(await _dbContext.Tags.ToListAsync());
+            return Ok(await _dbContext.Tag.ToListAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<List<Tag>>> Get(int id)
         {
-            var tag = await _dbContext.Tags.FindAsync(id);
+            var tag = await _dbContext.Tag.FindAsync(id);
             if (tag == null)
             {
                 return BadRequest("Tag not found.");
@@ -35,22 +35,22 @@ namespace ePortfolioAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Tag>>> Post(Tag tag)
         {
-            var tags = await _dbContext.Tags.ToListAsync();
+            var tags = await _dbContext.Tag.ToListAsync();
             int max = 0;
             foreach (var item in tags)
             {
                 if (item.Id > max) max = item.Id;
             }
             tag.Id = max + 1;
-            _dbContext.Tags.Add(tag);
+            _dbContext.Tag.Add(tag);
             await _dbContext.SaveChangesAsync();
-            return Ok(await _dbContext.Tags.ToListAsync());
+            return Ok(await _dbContext.Tag.ToListAsync());
         }
 
         [HttpPut]
         public async Task<ActionResult<List<Tag>>> Put(Tag req)
         {
-            var dbTag = await _dbContext.Tags.FindAsync(req.Id);
+            var dbTag = await _dbContext.Tag.FindAsync(req.Id);
             if (dbTag == null)
                 return BadRequest("Tag not found");
 
@@ -59,18 +59,18 @@ namespace ePortfolioAPI.Controllers
             
 
             await _dbContext.SaveChangesAsync();
-            return Ok(await _dbContext.Tags.ToListAsync());
+            return Ok(await _dbContext.Tag.ToListAsync());
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Tag>>> Delete(int id)
         {
-            var dbTag = await _dbContext.Tags.FindAsync(id);
+            var dbTag = await _dbContext.Tag.FindAsync(id);
             if (dbTag == null)
                 return BadRequest("Tag not found");
-            _dbContext.Tags.Remove(dbTag);
+            _dbContext.Tag.Remove(dbTag);
             await _dbContext.SaveChangesAsync();
-            return Ok(await _dbContext.Tags.ToListAsync());
+            return Ok(await _dbContext.Tag.ToListAsync());
         }
     }
 }

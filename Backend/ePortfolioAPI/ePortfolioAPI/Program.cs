@@ -7,7 +7,7 @@ var policyName = "_myAllowSpecificOrigins";
 builder.Services.AddControllers();
 builder.Services.AddDbContext<PostDBContext>(
     o =>{
-    o.UseMySQL(builder.Configuration.GetConnectionString("recyclathon"));
+    o.UseMySQL(builder.Configuration.GetConnectionString("ePortfolioDB"));
     });
 
 builder.Services.AddEndpointsApiExplorer();
