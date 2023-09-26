@@ -60,6 +60,7 @@ namespace ePortfolioAPI.Controllers
             dbPost.Location = req.Location;
             dbPost.Description = req.Description;
             dbPost.CreationDate = DateTime.Now;
+            dbPost.Likes = req.Likes;
 
             await _dbContext.SaveChangesAsync();
             return Ok(await _dbContext.Post.ToListAsync());

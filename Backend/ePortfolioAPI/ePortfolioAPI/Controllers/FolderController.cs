@@ -55,6 +55,7 @@ namespace ePortfolioAPI.Controllers
                 return BadRequest("Folder not found");
 
             dbFolder.Id = req.Id;
+            dbFolder.OwnerId = req.OwnerId;
             dbFolder.Name = req.Name;
             dbFolder.IsPublic = req.IsPublic;
             dbFolder.Description = req.Description;

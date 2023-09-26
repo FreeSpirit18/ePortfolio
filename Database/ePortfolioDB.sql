@@ -49,7 +49,8 @@ ALTER TABLE
     `User` ADD UNIQUE `user_password_unique`(`Password`);
 CREATE TABLE `Folder`(
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `Name` INT NOT NULL,
+    `OwnerId` INT UNSIGNED NOT NULL,
+    `Name` VARCHAR(255) NOT NULL,
     `Description` TEXT NOT NULL,
     `IsPublic` TINYINT(1) NOT NULL,
     `CreationDate` DATETIME NOT NULL
@@ -58,8 +59,8 @@ CREATE TABLE `Comment`(
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `AuthorId` INT UNSIGNED NOT NULL,
     `SubjectId` INT UNSIGNED NOT NULL,
-    `Content` BIGINT NOT NULL,
-    `CreationDate` BIGINT NOT NULL
+    `Content` TEXT NOT NULL,
+    `CreationDate` DATETIME NOT NULL
 );
 ALTER TABLE
     `Folder_Post` ADD CONSTRAINT `folder_post_postid_foreign` FOREIGN KEY(`PostId`) REFERENCES `Post`(`id`);
@@ -75,3 +76,5 @@ ALTER TABLE
     `Comment` ADD CONSTRAINT `comment_subjectid_foreign` FOREIGN KEY(`SubjectId`) REFERENCES `Post`(`id`);
 ALTER TABLE
     `Folder_Post` ADD CONSTRAINT `folder_post_folderid_foreign` FOREIGN KEY(`FolderId`) REFERENCES `Folder`(`id`);
+ALTER TABLE
+    `Folder` ADD CONSTRAINT `folder_ownerid_foreign` FOREIGN KEY(`OwnerId`) REFERENCES `User`(`id`);
