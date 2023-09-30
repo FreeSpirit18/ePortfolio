@@ -63,18 +63,18 @@ CREATE TABLE `Comment`(
     `CreationDate` DATETIME NOT NULL
 );
 ALTER TABLE
-    `Folder_Post` ADD CONSTRAINT `folder_post_postid_foreign` FOREIGN KEY(`PostId`) REFERENCES `Post`(`id`);
+    `Folder_Post` ADD CONSTRAINT `folder_post_postid_foreign` FOREIGN KEY(`PostId`) REFERENCES `Post`(`id`) ON DELETE CASCADE;
 ALTER TABLE
-    `Post_Tag` ADD CONSTRAINT `post_tag_tagid_foreign` FOREIGN KEY(`TagId`) REFERENCES `Tag`(`id`);
+    `Post_Tag` ADD CONSTRAINT `post_tag_tagid_foreign` FOREIGN KEY(`TagId`) REFERENCES `Tag`(`id`) ON DELETE CASCADE;
 ALTER TABLE
-    `Post` ADD CONSTRAINT `post_ownerid_foreign` FOREIGN KEY(`OwnerId`) REFERENCES `User`(`id`);
+    `Post` ADD CONSTRAINT `post_ownerid_foreign` FOREIGN KEY(`OwnerId`) REFERENCES `User`(`id`) ON DELETE CASCADE;
 ALTER TABLE
-    `Post_Tag` ADD CONSTRAINT `post_tag_postid_foreign` FOREIGN KEY(`PostId`) REFERENCES `Post`(`id`);
+    `Post_Tag` ADD CONSTRAINT `post_tag_postid_foreign` FOREIGN KEY(`PostId`) REFERENCES `Post`(`id`) ON DELETE CASCADE;
 ALTER TABLE
     `Comment` ADD CONSTRAINT `comment_authorid_foreign` FOREIGN KEY(`AuthorId`) REFERENCES `User`(`id`) ON DELETE CASCADE;
 ALTER TABLE
-    `Comment` ADD CONSTRAINT `comment_subjectid_foreign` FOREIGN KEY(`SubjectId`) REFERENCES `Post`(`id`);
+    `Comment` ADD CONSTRAINT `comment_subjectid_foreign` FOREIGN KEY(`SubjectId`) REFERENCES `Post`(`id`) ON DELETE CASCADE;
 ALTER TABLE
-    `Folder_Post` ADD CONSTRAINT `folder_post_folderid_foreign` FOREIGN KEY(`FolderId`) REFERENCES `Folder`(`id`);
+    `Folder_Post` ADD CONSTRAINT `folder_post_folderid_foreign` FOREIGN KEY(`FolderId`) REFERENCES `Folder`(`id`) ON DELETE CASCADE;
 ALTER TABLE
     `Folder` ADD CONSTRAINT `folder_ownerid_foreign` FOREIGN KEY(`OwnerId`) REFERENCES `User`(`id`) ON DELETE CASCADE;
