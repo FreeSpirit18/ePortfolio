@@ -35,6 +35,14 @@ namespace ePortfolioAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Post>>> Post(Post post)
         {
+            //------Foreig key check-------------------------------
+            var existingUser = await _dbContext.User.FirstOrDefaultAsync(t => t.Id == post.OwnerId);
+            
+            if (existingUser == null)
+                return Conflict("User dose not exist.");
+
+            //---------------------------------------------------------
+
             var posts = await _dbContext.Post.ToListAsync();
             int max = 0;
             foreach (var item in posts)

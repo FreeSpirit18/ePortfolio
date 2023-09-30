@@ -35,6 +35,18 @@ namespace ePortfolioAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Post_Tag>>> Post(Post_Tag post_tag)
         {
+            //------Foreig key check-------------------------------
+            var existingTag = await _dbContext.Folder.FirstOrDefaultAsync(t => t.Id == post_tag.TagId);
+            var existingPost = await _dbContext.Post.FirstOrDefaultAsync(t => t.Id == post_tag.PostId);
+
+            if (existingTag == null)
+                return Conflict("Tag dose not exist.");
+
+            if (existingPost == null)
+                return Conflict("Post dose not exist.");
+            //---------------------------------------------------------
+
+
             var post_tags = await _dbContext.Post_Tag.ToListAsync();
             int max = 0;
             foreach (var item in post_tags)
@@ -50,6 +62,18 @@ namespace ePortfolioAPI.Controllers
         [HttpPut]
         public async Task<ActionResult<List<Post_Tag>>> Put(Post_Tag req)
         {
+            //------Foreig key check-------------------------------
+            var existingTag = await _dbContext.Folder.FirstOrDefaultAsync(t => t.Id == req.TagId);
+            var existingPost = await _dbContext.Post.FirstOrDefaultAsync(t => t.Id == req.PostId);
+
+            if (existingTag == null)
+                return Conflict("Tag dose not exist.");
+
+            if (existingPost == null)
+                return Conflict("Post dose not exist.");
+            //---------------------------------------------------------
+
+
             var dbPost_Tag = await _dbContext.Post_Tag.FindAsync(req.Id);
             if (dbPost_Tag == null)
                 return BadRequest("Post_Tag not found");

@@ -10,8 +10,11 @@ builder.Services.AddDbContext<PostDBContext>(
     o.UseMySQL(builder.Configuration.GetConnectionString("ePortfolioDB"));
     });
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+//builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
+
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: policyName,
@@ -19,10 +22,7 @@ builder.Services.AddCors(options =>
                       {
                           builder
                             .AllowAnyOrigin()
-                            .WithMethods("GET")
-                            .WithMethods("DELETE")
-                            .WithMethods("POST")
-                            .WithMethods("PUT")
+                            .WithMethods("GET", "DELETE", "POST", "PUT")
                             .AllowAnyHeader();
                       });
 });
@@ -30,18 +30,14 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.UseCors(policyName);
-
 app.Run();

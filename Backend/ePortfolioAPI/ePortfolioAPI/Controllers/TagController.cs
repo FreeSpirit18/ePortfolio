@@ -2,6 +2,7 @@
 using ePortfolioAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Azure;
 
 namespace ePortfolioAPI.Controllers
 {
@@ -35,6 +36,14 @@ namespace ePortfolioAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Tag>>> Post(Tag tag)
         {
+            var existingTag = await _dbContext.Tag.FirstOrDefaultAsync(t => t.Name == tag.Name);
+
+            if (existingTag != null)
+            {
+                // A tag with the same name already exists, return a conflict response
+                return Conflict("Tag name is not unique.");
+            }
+
             var tags = await _dbContext.Tag.ToListAsync();
             int max = 0;
             foreach (var item in tags)
@@ -50,6 +59,14 @@ namespace ePortfolioAPI.Controllers
         [HttpPut]
         public async Task<ActionResult<List<Tag>>> Put(Tag req)
         {
+            var existingTag = await _dbContext.Tag.FirstOrDefaultAsync(t => t.Name == req.Name);
+
+            if (existingTag != null)
+            {
+                // A tag with the same name already exists, return a conflict response
+                return Conflict("Tag name is not unique.");
+            }
+
             var dbTag = await _dbContext.Tag.FindAsync(req.Id);
             if (dbTag == null)
                 return BadRequest("Tag not found");

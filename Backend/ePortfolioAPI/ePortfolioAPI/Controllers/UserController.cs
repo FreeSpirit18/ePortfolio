@@ -35,6 +35,18 @@ namespace ePortfolioAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<List<User>>> Post(User user)
         {
+
+            //------Unique check-------------------------------
+            var existingEmail = await _dbContext.User.FirstOrDefaultAsync(t => t.Email == user.Email);
+            var existingPassword = await _dbContext.User.FirstOrDefaultAsync(t => t.Password == user.Password);
+
+            if (existingEmail != null)
+                return Conflict("Email is taken");
+
+            if (existingPassword != null)
+                return Conflict("Password is taken");
+            //---------------------------------------------------------
+
             var users = await _dbContext.User.ToListAsync();
             int max = 0;
             foreach (var item in users)

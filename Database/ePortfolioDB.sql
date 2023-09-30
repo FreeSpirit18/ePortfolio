@@ -71,10 +71,10 @@ ALTER TABLE
 ALTER TABLE
     `Post_Tag` ADD CONSTRAINT `post_tag_postid_foreign` FOREIGN KEY(`PostId`) REFERENCES `Post`(`id`);
 ALTER TABLE
-    `Comment` ADD CONSTRAINT `comment_authorid_foreign` FOREIGN KEY(`AuthorId`) REFERENCES `User`(`id`);
+    `Comment` ADD CONSTRAINT `comment_authorid_foreign` FOREIGN KEY(`AuthorId`) REFERENCES `User`(`id`) ON DELETE CASCADE;
 ALTER TABLE
     `Comment` ADD CONSTRAINT `comment_subjectid_foreign` FOREIGN KEY(`SubjectId`) REFERENCES `Post`(`id`);
 ALTER TABLE
     `Folder_Post` ADD CONSTRAINT `folder_post_folderid_foreign` FOREIGN KEY(`FolderId`) REFERENCES `Folder`(`id`);
 ALTER TABLE
-    `Folder` ADD CONSTRAINT `folder_ownerid_foreign` FOREIGN KEY(`OwnerId`) REFERENCES `User`(`id`);
+    `Folder` ADD CONSTRAINT `folder_ownerid_foreign` FOREIGN KEY(`OwnerId`) REFERENCES `User`(`id`) ON DELETE CASCADE;

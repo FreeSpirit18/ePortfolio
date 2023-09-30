@@ -2,6 +2,7 @@
 using ePortfolioAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Ocsp;
 
 namespace ePortfolioAPI.Controllers
 {
@@ -35,6 +36,18 @@ namespace ePortfolioAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Folder_Post>>> Post(Folder_Post folder_post)
         {
+            //------Foreig key check-------------------------------
+            var existingFolder = await _dbContext.Folder.FirstOrDefaultAsync(t => t.Id == folder_post.FolderId);
+            var existingPost = await _dbContext.Post.FirstOrDefaultAsync(t => t.Id == folder_post.PostId);
+
+            if (existingFolder == null)
+                return Conflict("Folder dose not exist.");
+
+            if (existingPost == null)
+                return Conflict("Post dose not exist.");
+            //---------------------------------------------------------
+
+
             var folder_posts = await _dbContext.Folder_Post.ToListAsync();
             int max = 0;
             foreach (var item in folder_posts)
@@ -50,6 +63,17 @@ namespace ePortfolioAPI.Controllers
         [HttpPut]
         public async Task<ActionResult<List<Folder_Post>>> Put(Folder_Post req)
         {
+            //------Foreig key check-------------------------------
+            var existingFolder = await _dbContext.Folder.FirstOrDefaultAsync(t => t.Id == req.FolderId);
+            var existingPost = await _dbContext.Post.FirstOrDefaultAsync(t => t.Id == req.PostId);
+
+            if (existingFolder == null)
+                return Conflict("Folder dose not exist.");
+            
+            if (existingPost == null)
+                return Conflict("Post dose not exist.");
+            //---------------------------------------------------------
+
             var dbFolder_Post = await _dbContext.Folder_Post.FindAsync(req.Id);
             if (dbFolder_Post == null)
                 return BadRequest("Folder_Post not found");

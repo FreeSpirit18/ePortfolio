@@ -2,6 +2,7 @@
 using ePortfolioAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Azure;
 
 namespace ePortfolioAPI.Controllers
 {
@@ -35,6 +36,22 @@ namespace ePortfolioAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Comment>>> Post(Comment comment)
         {
+
+            var existingUser = await _dbContext.User.FirstOrDefaultAsync(t => t.Id == comment.AuthorId);
+            var existingPost = await _dbContext.Post.FirstOrDefaultAsync(t => t.Id == comment.SubjectId);
+
+            if (existingUser == null)
+            {
+                // A tag with the same name already exists, return a conflict response
+                return Conflict("Author(User) dose not exist.");
+            }
+
+            if (existingPost == null)
+            {
+                // A tag with the same name already exists, return a conflict response
+                return Conflict("Post dose not exist.");
+            }
+
             var comments = await _dbContext.Comment.ToListAsync();
             int max = 0;
             foreach (var item in comments)
@@ -50,6 +67,21 @@ namespace ePortfolioAPI.Controllers
         [HttpPut]
         public async Task<ActionResult<List<Comment>>> Put(Comment req)
         {
+            var existingUser = await _dbContext.User.FirstOrDefaultAsync(t => t.Id == req.AuthorId);
+            var existingPost = await _dbContext.Post.FirstOrDefaultAsync(t => t.Id == req.SubjectId);
+
+            if (existingUser == null)
+            {
+                // A tag with the same name already exists, return a conflict response
+                return Conflict("Author(User) dose not exist.");
+            }
+
+            if (existingPost == null)
+            {
+                // A tag with the same name already exists, return a conflict response
+                return Conflict("Post dose not exist.");
+            }
+
             var dbComment = await _dbContext.Comment.FindAsync(req.Id);
             if (dbComment == null)
                 return BadRequest("Comment not found");

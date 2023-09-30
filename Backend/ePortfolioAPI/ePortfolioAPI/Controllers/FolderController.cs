@@ -35,6 +35,14 @@ namespace ePortfolioAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Folder>>> Post(Folder folder)
         {
+            //------Foreig key check-------------------------------
+            var existingUser = await _dbContext.User.FirstOrDefaultAsync(t => t.Id == folder.OwnerId);
+
+            if (existingUser == null)
+                return Conflict("User dose not exist.");
+
+            //---------------------------------------------------------
+
             var folders = await _dbContext.Folder.ToListAsync();
             int max = 0;
             foreach (var item in folders)
