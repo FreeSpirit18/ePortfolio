@@ -37,10 +37,12 @@ namespace ePortfolioAPI.Controllers
         {
             //------Foreig key check-------------------------------
             var existingUser = await _dbContext.User.FirstOrDefaultAsync(t => t.Id == post.OwnerId);
-            
+            var existingPost = await _dbContext.Post.FirstOrDefaultAsync(t => t.Location == post.Location);
+
             if (existingUser == null)
                 return Conflict("User dose not exist.");
-
+            if (existingPost != null)
+                return Conflict("Failed to create post");
             //---------------------------------------------------------
 
             var posts = await _dbContext.Post.ToListAsync();

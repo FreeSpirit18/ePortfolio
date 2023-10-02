@@ -81,7 +81,7 @@ namespace ePortfolioAPI.Controllers
                 try
                 {
                     var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
-                    fileName = DateTime.Now.Ticks.ToString() + extension;
+                    fileName = DateTime.Now.Ticks.ToString() + "_" + Guid.NewGuid().ToString() + extension;
 
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\Files");
                     if (!Directory.Exists(filePath))
