@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ePortfolioAPI.Data.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 
@@ -25,8 +26,6 @@ namespace ePortfolioAPI.Controllers
             return Ok(results);
         }
 
-        
-
         [HttpGet]
         [Route("DownloadFile")]
         public async Task<IActionResult> DownloadFile(string filename)
@@ -47,7 +46,35 @@ namespace ePortfolioAPI.Controllers
             var bytes = await System.IO.File.ReadAllBytesAsync(filepath);
             return File(bytes, contenttype, Path.GetFileName(filepath));
         }
-    
+
+        [HttpDelete]
+        [Route("DeleteFile")]
+        public async Task<IActionResult> Delete(string filename)
+        {
+            var filepath = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\Files", filename);
+
+            try
+            {
+                // Check if the file exists before attempting to delete it
+                if (System.IO.File.Exists(filepath))
+                {
+                    // Delete the file
+                    System.IO.File.Delete(filepath);
+                    return Ok("File deleted successfully.");
+                }
+                else
+                {
+                    return NotFound("File not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that may occur during file deletion
+                return StatusCode(500, $"An error occurred while deleting the file: {ex.Message}");
+            }
+
+        }
+
         private async Task<string> WriteFile(IFormFile file) {
 
                 string fileName = "";
