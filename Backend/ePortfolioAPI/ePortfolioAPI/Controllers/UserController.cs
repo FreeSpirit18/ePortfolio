@@ -2,6 +2,7 @@
 using ePortfolioAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1.X509;
 
 namespace ePortfolioAPI.Controllers
 {
@@ -47,6 +48,7 @@ namespace ePortfolioAPI.Controllers
                 return Conflict("Password is taken");
             //---------------------------------------------------------
 
+
             var users = await _dbContext.User.ToListAsync();
             int max = 0;
             foreach (var item in users)
@@ -56,6 +58,25 @@ namespace ePortfolioAPI.Controllers
             user.Id = max + 1;
             _dbContext.User.Add(user);
             await _dbContext.SaveChangesAsync();
+            //-------------Creating mandatory favorite folder----------------
+            Folder fav = new Folder();
+            fav.OwnerId = user.Id;
+            fav.Name = "favorite";
+            fav.Description = "Folder for favorited posts";
+            fav.IsPublic = true;
+            fav.CreationDate = DateTime.Now;
+
+            var folders = await _dbContext.Folder.ToListAsync();
+            int maxf = 0;
+            foreach (var item in folders)
+            {
+                if (item.Id > maxf) maxf = item.Id;
+            }
+            fav.Id = maxf + 1;
+            _dbContext.Folder.Add(fav);
+            await _dbContext.SaveChangesAsync();
+            //--------------------------------------------------------
+
             return Ok(await _dbContext.User.ToListAsync());
         }
 
