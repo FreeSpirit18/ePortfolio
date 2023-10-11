@@ -1,7 +1,9 @@
 ﻿using ePortfolioAPI.Data.Models;
+using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
+using System.Security.AccessControl;
 
 namespace ePortfolioAPI.Controllers
 {
@@ -11,94 +13,92 @@ namespace ePortfolioAPI.Controllers
     {
         [HttpPost]
         [Route("UploadFile")]
-        public async Task<IActionResult> UploadFile(IFormFile file, CancellationToken cancellationToken) {
-
+        public async Task<IActionResult> UploadFile(IFormFile file, CancellationToken cancellationToken)
+        {
             // Check if the uploaded file is a PNG or JPEG
             if (!IsFileValid(file))
             {
                 return BadRequest("Invalid file format. Only PNG and JPEG files are allowed.");
             }
+            //Unique file name
+            var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
+            string fileName = DateTime.Now.Ticks.ToString() + "_" + Guid.NewGuid().ToString() + extension;
+            
+            var array = await ConvertIFormFileToByteArray(file);
+            try
+            {
+                var client = StorageClient.Create();
+                var obj = await client.UploadObjectAsync(
+                    "eportfoli-ktu",
+                    fileName,
+                    file.ContentType,
+                    new MemoryStream(array));
+            
+                return Ok(fileName);
 
-
-            var results = await WriteFile(file);
-            if (results == null)
-                return Conflict("File upload error");
-            return Ok(results);
+            }catch (Exception ex)
+            {
+                return Conflict("File upload error ");
+            }
         }
+
 
         [HttpGet]
         [Route("DownloadFile")]
         public async Task<IActionResult> DownloadFile(string filename)
         {
-            var filepath = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\Files", filename);
+            var client = StorageClient.Create();
 
-            var provider = new FileExtensionContentTypeProvider();
-            if (!provider.TryGetContentType(filepath, out var contenttype))
+            try
             {
-                contenttype = "application/octet-stream";
-            }
+                var stream = new MemoryStream();
+                var obj = await client.DownloadObjectAsync("eportfoli-ktu", filename, stream);
+                stream.Position = 0;
 
-            if (!System.IO.File.Exists(filepath))
+                return File(stream, obj.ContentType, obj.Name);
+
+            }catch (Exception ex)
             {
                 return Conflict("File not found");
             }
 
-            var bytes = await System.IO.File.ReadAllBytesAsync(filepath);
-            return File(bytes, contenttype, Path.GetFileName(filepath));
         }
 
         [HttpDelete]
         [Route("DeleteFile")]
         public async Task<IActionResult> Delete(string filename)
         {
-            var filepath = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\Files", filename);
-
+           
+            var client = StorageClient.Create();
             try
             {
-                // Check if the file exists before attempting to delete it
-                if (System.IO.File.Exists(filepath))
-                {
-                    // Delete the file
-                    System.IO.File.Delete(filepath);
+                var storageObject = client.GetObject("eportfoli-ktu", filename);
+                try { 
+                    await client.DeleteObjectAsync(storageObject);
                     return Ok("File deleted successfully.");
                 }
-                else
-                {
-                    return NotFound("File not found.");
+                catch (Exception ex) {
+                    return StatusCode(500, $"An error occurred while deleting the file: {ex.Message}");
                 }
+                // If the object exists, you can access its metadata
+                
             }
-            catch (Exception ex)
+            catch (Google.GoogleApiException ex) when (ex.HttpStatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                // Handle any exceptions that may occur during file deletion
-                return StatusCode(500, $"An error occurred while deleting the file: {ex.Message}");
+                return NotFound("File not found.");
             }
+            
 
         }
-
-        private async Task<string> WriteFile(IFormFile file) {
-
-                string fileName = "";
-                try
-                {
-                    var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
-                    fileName = DateTime.Now.Ticks.ToString() + "_" + Guid.NewGuid().ToString() + extension;
-
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\Files");
-                    if (!Directory.Exists(filePath))
-                    {
-                        Directory.CreateDirectory(filePath);
-                    }
-                    var exactPath = Path.Combine(Directory.GetCurrentDirectory(), "Upload\\Files", fileName);
-                    using (var stream = new FileStream(exactPath, FileMode.Create))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
-                }catch (Exception ex)
-                {
-                    return null;
-                }
-                return fileName;
+        private async Task<byte[]> ConvertIFormFileToByteArray(IFormFile file)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await file.CopyToAsync(memoryStream);
+                return memoryStream.ToArray();
             }
+        }
+
         private bool IsFileValid(IFormFile file)
         {
             // Define the allowed MIME types for PNG and JPEG
