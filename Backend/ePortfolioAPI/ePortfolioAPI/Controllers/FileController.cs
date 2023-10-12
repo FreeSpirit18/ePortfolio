@@ -3,6 +3,7 @@ using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
+using System.IO.Compression;
 using System.Security.AccessControl;
 
 namespace ePortfolioAPI.Controllers
@@ -23,7 +24,7 @@ namespace ePortfolioAPI.Controllers
             //Unique file name
             var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
             string fileName = DateTime.Now.Ticks.ToString() + "_" + Guid.NewGuid().ToString() + extension;
-            
+
             var array = await ConvertIFormFileToByteArray(file);
             try
             {
@@ -33,13 +34,35 @@ namespace ePortfolioAPI.Controllers
                     fileName,
                     file.ContentType,
                     new MemoryStream(array));
-            
+
                 return Ok(fileName);
 
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return Conflict("File upload error ");
             }
+
+            /*using (var compressedStream = new MemoryStream())
+            using (var gzipStream = new GZipStream(compressedStream, CompressionLevel.Optimal))
+            {
+                await file.CopyToAsync(gzipStream);
+                gzipStream.Close();
+
+                var array = compressedStream.ToArray();
+
+                try
+                {
+                    var client = StorageClient.Create();
+                    var obj = await client.UploadObjectAsync("eportfoli-ktu", fileName, "application/gzip", new MemoryStream(array));
+
+                    return Ok(fileName);
+                }
+                catch (Exception ex)
+                {
+                    return Conflict("File upload error");
+                }
+            }*/
         }
 
 
@@ -48,6 +71,27 @@ namespace ePortfolioAPI.Controllers
         public async Task<IActionResult> DownloadFile(string filename)
         {
             var client = StorageClient.Create();
+            /*try
+            {
+                var stream = new MemoryStream();
+                var obj = await client.DownloadObjectAsync("eportfoli-ktu", filename, stream);
+                stream.Position = 0;
+
+                // Create a new MemoryStream to hold the decompressed data
+                using (var decompressedStream = new MemoryStream())
+                using (var gzipStream = new GZipStream(stream, CompressionMode.Decompress, true))
+                {
+                    //stream.CopyTo(gzipStream);
+                    gzipStream.CopyTo(decompressedStream);
+                    decompressedStream.Position = 0;
+                    // Return the decompressed data
+                    return File(decompressedStream, obj.ContentType, obj.Name);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Conflict("File not found");
+            }*/
 
             try
             {
