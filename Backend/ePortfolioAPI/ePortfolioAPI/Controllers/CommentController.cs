@@ -3,6 +3,7 @@ using ePortfolioAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Azure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ePortfolioAPI.Controllers
 {

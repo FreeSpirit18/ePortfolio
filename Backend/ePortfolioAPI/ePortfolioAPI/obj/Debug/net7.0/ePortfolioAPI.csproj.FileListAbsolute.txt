@@ -95,3 +95,10 @@ C:\Users\admin\Documents\GitHub\ePortfolio\Backend\ePortfolioAPI\ePortfolioAPI\b
 C:\Users\admin\Documents\GitHub\ePortfolio\Backend\ePortfolioAPI\ePortfolioAPI\bin\Debug\net7.0\Google.Apis.Storage.v1.dll
 C:\Users\admin\Documents\GitHub\ePortfolio\Backend\ePortfolioAPI\ePortfolioAPI\bin\Debug\net7.0\Google.Cloud.Storage.V1.dll
 C:\Users\admin\Documents\GitHub\ePortfolio\Backend\ePortfolioAPI\ePortfolioAPI\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\admin\Documents\GitHub\ePortfolio\Backend\ePortfolioAPI\ePortfolioAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\admin\Documents\GitHub\ePortfolio\Backend\ePortfolioAPI\ePortfolioAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\admin\Documents\GitHub\ePortfolio\Backend\ePortfolioAPI\ePortfolioAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\admin\Documents\GitHub\ePortfolio\Backend\ePortfolioAPI\ePortfolioAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\admin\Documents\GitHub\ePortfolio\Backend\ePortfolioAPI\ePortfolioAPI\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\admin\Documents\GitHub\ePortfolio\Backend\ePortfolioAPI\ePortfolioAPI\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\admin\Documents\GitHub\ePortfolio\Backend\ePortfolioAPI\ePortfolioAPI\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
