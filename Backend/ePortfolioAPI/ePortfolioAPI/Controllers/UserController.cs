@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Asn1.X509;
 using ePortfolioAPI.Auth.Services;
 using System.Data;
+using Microsoft.AspNetCore.Authorization;
+using ePortfolioAPI.Auth;
 
 namespace ePortfolioAPI.Controllers
 {
@@ -106,11 +108,12 @@ namespace ePortfolioAPI.Controllers
 
 
             var accessToken = _jwtTokenService.CreateAccessToken(logUser.UserName, logUser.Id, logUser.Role);
-            return Ok(accessToken);
+            return Ok(new SuccessfulLoginDto(accessToken));
         }
 
-        /*[HttpPut]
-        public async Task<ActionResult<List<User>>> Put(User req)
+        [HttpPut]
+        [Authorize]
+        public async Task<ActionResult<List<User>>> Put(UserDto req)
         {
             var dbUser = await _dbContext.User.FindAsync(req.Id);
             if (dbUser == null)
@@ -119,7 +122,7 @@ namespace ePortfolioAPI.Controllers
             dbUser.Id = req.Id;
             dbUser.Email = req.Email;
             dbUser.Password = req.Password;
-            dbUser.Name = req.Name;
+            dbUser.UserName = req.UserName;
             dbUser.Role = req.Role;
             dbUser.JoinDate = DateTime.Now;
 
@@ -129,6 +132,7 @@ namespace ePortfolioAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = WebsiteRoles.Admin)]
         public async Task<ActionResult<List<User>>> Delete(int id)
         {
             var dbUser = await _dbContext.User.FindAsync(id);
@@ -137,6 +141,6 @@ namespace ePortfolioAPI.Controllers
             _dbContext.User.Remove(dbUser);
             await _dbContext.SaveChangesAsync();
             return Ok(await _dbContext.User.ToListAsync());
-        }*/
+        }
     }
 }

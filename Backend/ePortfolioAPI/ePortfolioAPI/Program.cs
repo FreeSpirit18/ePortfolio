@@ -1,8 +1,6 @@
-using ePortfolioAPI.Auth.Entities;
 using ePortfolioAPI.Auth.Services;
 using ePortfolioAPI.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -24,7 +22,7 @@ builder.Services.AddDbContext<PostDBContext>(
     });
 builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
 
-/*
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -36,11 +34,12 @@ builder.Services.AddAuthentication(options =>
       options.TokenValidationParameters.ValidIssuer = builder.Configuration["JWT:ValidIssuer"];
       options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]));
   });
-*/
+
+builder.Services.AddAuthorization();
 
 //-------------------------------------------
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
 //--------------------------------------------
 
 builder.Services.AddCors(options =>
@@ -58,15 +57,15 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 //-----------------------------------
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
 //--------------------------------------
 app.UseHttpsRedirection();
-app.MapControllers();
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();
 app.UseCors(policyName);
 app.Run();

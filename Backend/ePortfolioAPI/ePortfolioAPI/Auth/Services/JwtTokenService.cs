@@ -32,7 +32,6 @@ namespace ePortfolioAPI.Auth.Services
                 new(JwtRegisteredClaimNames.Sub, userId.ToString()),
             };
 
-            //authClaims.AddRange(userRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole)));
 
             var accessSecurityToken = new JwtSecurityToken
             (
