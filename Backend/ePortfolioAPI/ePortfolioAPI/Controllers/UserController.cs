@@ -15,7 +15,7 @@ namespace ePortfolioAPI.Controllers
         {
             _dbContext = dbContext;
         }
-
+        /*
         [HttpGet]
         public async Task<ActionResult<List<User>>> Get()
         {
@@ -32,14 +32,13 @@ namespace ePortfolioAPI.Controllers
             }
             return Ok(user);
         }
-
-        [HttpPost]
-        public async Task<ActionResult<List<User>>> Post(User user)
+        */
+        [HttpPost("register")]
+        public async Task<ActionResult<List<User>>> Register(RegisterUserDto request)
         {
-
             //------Unique check-------------------------------
-            var existingEmail = await _dbContext.User.FirstOrDefaultAsync(t => t.Email == user.Email);
-            var existingPassword = await _dbContext.User.FirstOrDefaultAsync(t => t.Password == user.Password);
+            var existingEmail = await _dbContext.User.FirstOrDefaultAsync(t => t.Email == request.Email);
+            var existingPassword = await _dbContext.User.FirstOrDefaultAsync(t => t.Password == request.Password);
 
             if (existingEmail != null)
                 return Conflict("Email is taken");
@@ -55,12 +54,19 @@ namespace ePortfolioAPI.Controllers
             {
                 if (item.Id > max) max = item.Id;
             }
-            user.Id = max + 1;
-            _dbContext.User.Add(user);
+            var newUser = new User();
+            newUser.Email = request.Email;
+            newUser.Password = request.Password;
+            newUser.Id = max + 1;
+            newUser.Role = request.Role;
+            newUser.UserName = request.UserName;
+            newUser.JoinDate = DateTime.Now;
+
+            _dbContext.User.Add(newUser);
             await _dbContext.SaveChangesAsync();
             //-------------Creating mandatory favorite folder----------------
             Folder fav = new Folder();
-            fav.OwnerId = user.Id;
+            fav.OwnerId = newUser.Id;
             fav.Name = "favorite";
             fav.Description = "Folder for favorited posts";
             fav.IsPublic = true;
@@ -80,7 +86,23 @@ namespace ePortfolioAPI.Controllers
             return Ok(await _dbContext.User.ToListAsync());
         }
 
-        [HttpPut]
+        [HttpPost("login")]
+        public async Task<ActionResult<List<User>>> Login(LoginDto request)
+        {
+            //------Unique check-------------------------------
+            User logUser = await _dbContext.User.FirstOrDefaultAsync(t => t.Email == request.Email);
+
+            if (logUser == null)
+                return Conflict("Incorrect email");
+
+            if (logUser.Password != request.Password)
+                return Conflict("Incorect password");
+            //---------------------------------------------------------
+
+            return Ok(logUser);
+        }
+
+        /*[HttpPut]
         public async Task<ActionResult<List<User>>> Put(User req)
         {
             var dbUser = await _dbContext.User.FindAsync(req.Id);
@@ -108,6 +130,6 @@ namespace ePortfolioAPI.Controllers
             _dbContext.User.Remove(dbUser);
             await _dbContext.SaveChangesAsync();
             return Ok(await _dbContext.User.ToListAsync());
-        }
+        }*/
     }
 }

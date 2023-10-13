@@ -40,7 +40,7 @@ CREATE TABLE `User`(
     `Role` INT NOT NULL,
     `Email` VARCHAR(255) NOT NULL,
     `Password` VARCHAR(255) NOT NULL,
-    `Name` VARCHAR(255) NOT NULL,
+    `UserName` VARCHAR(255) NOT NULL,
     `JoinDate` DATETIME NOT NULL
 );
 ALTER TABLE
