@@ -7,7 +7,7 @@ namespace ePortfolioAPI.Auth.Services
 {
     public interface IJwtTokenService
     {
-        string CreateAccessToken(string userName, string userId, IEnumerable<string> userRoles);
+        string CreateAccessToken(string userName, int userId, string userRoles);
     }
     public class JwtTokenService : IJwtTokenService
     {
@@ -22,16 +22,17 @@ namespace ePortfolioAPI.Auth.Services
             _audience = configuration["JWT:ValidAudience"]!;
         }
 
-        public string CreateAccessToken(string userName, string userId, IEnumerable<string> userRoles)
+        public string CreateAccessToken(string userName, int userId, string userRole)
         {
             var authClaims = new List<Claim>
             {
                 new(ClaimTypes.Name, userName),
+                new(ClaimTypes.Role, userRole),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new(JwtRegisteredClaimNames.Sub, userId),
+                new(JwtRegisteredClaimNames.Sub, userId.ToString()),
             };
 
-            authClaims.AddRange(userRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole)));
+            //authClaims.AddRange(userRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole)));
 
             var accessSecurityToken = new JwtSecurityToken
             (

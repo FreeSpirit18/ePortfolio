@@ -3,6 +3,8 @@ using ePortfolioAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Asn1.X509;
+using ePortfolioAPI.Auth.Services;
+using System.Data;
 
 namespace ePortfolioAPI.Controllers
 {
@@ -11,9 +13,12 @@ namespace ePortfolioAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly PostDBContext _dbContext;
-        public UserController(PostDBContext dbContext)
+
+        private readonly IJwtTokenService _jwtTokenService;
+        public UserController(PostDBContext dbContext, IJwtTokenService jwtTokenService)
         {
             _dbContext = dbContext;
+            _jwtTokenService = jwtTokenService;
         }
         /*
         [HttpGet]
@@ -99,7 +104,9 @@ namespace ePortfolioAPI.Controllers
                 return Conflict("Incorect password");
             //---------------------------------------------------------
 
-            return Ok(logUser);
+
+            var accessToken = _jwtTokenService.CreateAccessToken(logUser.UserName, logUser.Id, logUser.Role);
+            return Ok(accessToken);
         }
 
         /*[HttpPut]

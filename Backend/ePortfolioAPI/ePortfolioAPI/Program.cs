@@ -1,4 +1,5 @@
 using ePortfolioAPI.Auth.Entities;
+using ePortfolioAPI.Auth.Services;
 using ePortfolioAPI.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -21,7 +22,7 @@ builder.Services.AddDbContext<PostDBContext>(
     o =>{
     o.UseMySQL(builder.Configuration.GetConnectionString("ePortfolioDB"));
     });
-
+builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
 
 /*
 builder.Services.AddAuthentication(options =>
