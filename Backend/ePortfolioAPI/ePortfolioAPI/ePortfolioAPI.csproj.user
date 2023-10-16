@@ -4,6 +4,17 @@
     <ActiveDebugProfile>http</ActiveDebugProfile>
     <Controller_SelectedScaffolderID>ApiControllerEmptyScaffolder</Controller_SelectedScaffolderID>
     <Controller_SelectedScaffolderCategoryPath>root/Common/Api</Controller_SelectedScaffolderCategoryPath>
+    <GoogleAppEnginePublishPromote>True</GoogleAppEnginePublishPromote>
+    <GoogleAppEnginePublishOpenWebsite>True</GoogleAppEnginePublishOpenWebsite>
+    <GoogleCloudPublishConfiguration>Release</GoogleCloudPublishConfiguration>
+    <GoogleComputeEnginePublishInstanceName>aspnet-1</GoogleComputeEnginePublishInstanceName>
+    <GoogleComputeEnginePublishInstanceZone>europe-west4-c</GoogleComputeEnginePublishInstanceZone>
+    <GoogleComputeEnginePublishInstanceUserName>admin</GoogleComputeEnginePublishInstanceUserName>
+    <GoogleComputeEnginePublishOpenWebsite>True</GoogleComputeEnginePublishOpenWebsite>
+    <GoogleComputeEnginePublishLaunchRemoteDebugger>False</GoogleComputeEnginePublishLaunchRemoteDebugger>
+    <GoogleComputeEnginePublishSiteName>Default Web Site</GoogleComputeEnginePublishSiteName>
+    <GoogleCloudPublishChoice>Gce</GoogleCloudPublishChoice>
+    <NameOfLastUsedPublishProfile>C:\Users\admin\Documents\GitHub\ePortfolio\Backend\ePortfolioAPI\ePortfolioAPI\Properties\PublishProfiles\ePortfolioAPI - Zip Deploy.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>

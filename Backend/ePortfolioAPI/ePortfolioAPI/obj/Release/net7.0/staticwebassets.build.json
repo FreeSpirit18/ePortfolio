@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "K12SX9uX3CnrVL2BqwR11MHGamLIqlx0eFgepIhk1GA=",
+  "Source": "ePortfolioAPI",
+  "BasePath": "_content/ePortfolioAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
