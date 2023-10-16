@@ -1,4 +1,5 @@
-﻿using ePortfolioAPI.Data.Models;
+﻿using Azure.Storage.Blobs;
+using ePortfolioAPI.Data.Models;
 using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,11 +12,14 @@ namespace ePortfolioAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class FileController : ControllerBase
-    {
+    { 
+        private readonly string ConnectionString = "DefaultEndpointsProtocol=https;AccountName=eportfoliostore;AccountKey=MegscmjSiAaS41oZe7y71y9FBG8lZYMF4aSULB7R/WQEeyhZkjCoj54/Vyi39FuggfeMxPiiPgr/+AStutPTmA==;EndpointSuffix=core.windows.net";
+        private readonly string Name = "pictures";
         [HttpPost]
         [Route("UploadFile")]
         public async Task<IActionResult> UploadFile(IFormFile file, CancellationToken cancellationToken)
         {
+           
             // Check if the uploaded file is a PNG or JPEG
             if (!IsFileValid(file))
             {
@@ -28,12 +32,9 @@ namespace ePortfolioAPI.Controllers
             var array = await ConvertIFormFileToByteArray(file);
             try
             {
-                var client = StorageClient.Create();
-                var obj = await client.UploadObjectAsync(
-                    "eportfoli-ktu",
-                    fileName,
-                    file.ContentType,
-                    new MemoryStream(array));
+
+                var container = new BlobContainerClient(ConnectionString, Name);
+                await container.UploadBlobAsync(fileName, new  MemoryStream(array));
 
                 return Ok(fileName);
 
@@ -42,27 +43,6 @@ namespace ePortfolioAPI.Controllers
             {
                 return Conflict("File upload error ");
             }
-
-            /*using (var compressedStream = new MemoryStream())
-            using (var gzipStream = new GZipStream(compressedStream, CompressionLevel.Optimal))
-            {
-                await file.CopyToAsync(gzipStream);
-                gzipStream.Close();
-
-                var array = compressedStream.ToArray();
-
-                try
-                {
-                    var client = StorageClient.Create();
-                    var obj = await client.UploadObjectAsync("eportfoli-ktu", fileName, "application/gzip", new MemoryStream(array));
-
-                    return Ok(fileName);
-                }
-                catch (Exception ex)
-                {
-                    return Conflict("File upload error");
-                }
-            }*/
         }
 
 
@@ -70,36 +50,15 @@ namespace ePortfolioAPI.Controllers
         [Route("DownloadFile")]
         public async Task<IActionResult> DownloadFile(string filename)
         {
-            var client = StorageClient.Create();
-            /*try
-            {
-                var stream = new MemoryStream();
-                var obj = await client.DownloadObjectAsync("eportfoli-ktu", filename, stream);
-                stream.Position = 0;
-
-                // Create a new MemoryStream to hold the decompressed data
-                using (var decompressedStream = new MemoryStream())
-                using (var gzipStream = new GZipStream(stream, CompressionMode.Decompress, true))
-                {
-                    //stream.CopyTo(gzipStream);
-                    gzipStream.CopyTo(decompressedStream);
-                    decompressedStream.Position = 0;
-                    // Return the decompressed data
-                    return File(decompressedStream, obj.ContentType, obj.Name);
-                }
-            }
-            catch (Exception ex)
-            {
-                return Conflict("File not found");
-            }*/
+            //var client = StorageClient.Create();
 
             try
             {
-                var stream = new MemoryStream();
-                var obj = await client.DownloadObjectAsync("eportfoli-ktu", filename, stream);
-                stream.Position = 0;
+                var container = new BlobClient(ConnectionString, Name, filename);
+                var stream = container.OpenReadAsync().Result;
+                //stream.Position = 0;
 
-                return File(stream, obj.ContentType, obj.Name);
+                return File(stream, "application/octet-stream", filename);
 
             }catch (Exception ex)
             {
@@ -113,12 +72,11 @@ namespace ePortfolioAPI.Controllers
         public async Task<IActionResult> Delete(string filename)
         {
            
-            var client = StorageClient.Create();
             try
             {
-                var storageObject = client.GetObject("eportfoli-ktu", filename);
-                try { 
-                    await client.DeleteObjectAsync(storageObject);
+                var container = new BlobClient(ConnectionString, Name, filename);
+                try {
+                    await container.DeleteAsync();
                     return Ok("File deleted successfully.");
                 }
                 catch (Exception ex) {

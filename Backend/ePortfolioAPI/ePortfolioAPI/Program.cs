@@ -38,8 +38,8 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 //-------------------------------------------
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 //--------------------------------------------
 
 builder.Services.AddCors(options =>
@@ -57,11 +57,11 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 //-----------------------------------
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 //--------------------------------------
 app.UseHttpsRedirection();
 app.UseAuthentication();
