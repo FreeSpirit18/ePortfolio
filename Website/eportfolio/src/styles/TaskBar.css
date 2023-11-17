@@ -1,8 +1,152 @@
-.task-bar {
-    background-color: #333;
-    color: white;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-  }
-  
+@import url('palette.css');
+
+
+.box {
+  height: 61px;
+  width: 100%;
+}
+
+.box .group {
+  height: 61px;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.box .overlap-group {
+  background-color: var(--main-black);
+  border: 1px solid;
+  border-color: var(--main-white);
+  height: 61px;
+  position: relative;
+  width: 100%;
+}
+
+.box .text-wrapper {
+  color: var(--main-white);
+  font-family: "Inter-Bold", Helvetica;
+  font-size: 32px;
+  font-weight: 700;
+  left: 12px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 10px;
+  width: 169px;
+}
+
+.box .div {
+  height: 43px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 290px;
+}
+
+.box .frame {
+  height: 33px;
+  left: 200px;
+  position: absolute;
+  top: 5px;
+  width: 33px;
+}
+
+.box .group-wrapper {
+  background: linear-gradient(180deg, var(--main-red) 0%, var(--main-white) 180%);
+  border-radius: 5px;
+  height: 41px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 186px;
+}
+
+.box .group-2 {
+  height: 35px;
+  left: 15px;
+  position: relative;
+  top: 3px;
+  width: 164px;
+}
+
+.box .img {
+  height: 35px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 35px;
+}
+
+.box .text-wrapper-2 {
+  color: #1c1c1c;
+  font-family: "Inter-Bold", Helvetica;
+  font-size: 15px;
+  font-weight: 700;
+  height: 23px;
+  left: 35px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 7px;
+  width: 127px;
+}
+
+.box .frame-wrapper {
+  background-color: var(--main-white);
+  border-radius: 21.5px;
+  height: 43px;
+  left: 247px;
+  position: absolute;
+  top: 0;
+  width: 43px;
+}
+
+.box .frame-2 {
+  height: 38px;
+  left: 3px;
+  position: absolute;
+  top: 2px;
+  width: 38px;
+}
+
+.box .div-wrapper {
+  background-color: var(--secondery-black);
+  border-radius: 4px;
+  height: 38px;
+  left: 476px;
+  position: absolute;
+  top: 8px;
+  width: 30%;
+}
+
+.box .group-3 {
+  height: 32px;
+  left: 7px;
+  position: relative;
+  top: 3px;
+  width: 145px;
+}
+
+.box .frame-3 {
+  height: 32px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 32px;
+}
+
+.box .text-wrapper-3 {
+  color: var(--main-gray);
+  font-family: "Inter-Regular", Helvetica;
+  font-size: 15px;
+  font-weight: 400;
+  height: 17px;
+  left: 41px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 8px;
+  white-space: nowrap;
+  width: 102px;
+}

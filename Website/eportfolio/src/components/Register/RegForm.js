@@ -25,11 +25,14 @@ function RegForm(){
     return(
         <>
             <form className='login-form'>
-                <input type='text' value={userName}  onChange={ev => setUserName(ev.target.value)} required/>
-                <input type='text' value={email}  onChange={ev => setEmail(ev.target.value)} required/>
-                <input type='text' value={password}  onChange={ev => setPassword(ev.target.value)} required/>
+                <p>User name:</p>
+                <input className='text-imput' type='text' value={userName}  onChange={ev => setUserName(ev.target.value)} required/>
+                <p>Email:</p>
+                <input className='text-imput' type='text' value={email}  onChange={ev => setEmail(ev.target.value)} required/>
+                <p>Password:</p>
+                <input className='text-imput' type='text' value={password}  onChange={ev => setPassword(ev.target.value)} required/>
                 <input
-                className="inputButton"
+                className="input-Button"
                 type="button"
                 onClick={submit}
                 value={"Register"} />

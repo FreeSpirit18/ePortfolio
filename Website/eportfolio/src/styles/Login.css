@@ -1,16 +1,38 @@
+@import url('palette.css');
+
+.bodyWithCustomBackground{
+  background: linear-gradient(to right, blue 50%, yellow 50%);
+}
 .login-form {
-    width: 300px;
-    height: 300px;
-    background-color: #2b2b2b;
-    border: 1px solid #ccc;
+    width: 400px;
+    height: 350px;
+    background-color: var(--main-black);
+    border: 1px solid var(--main-red);
     border-radius: 5px;
-    margin: 0 auto; /* Center horizontally */
-    margin-top: 100px; /* Adjust the top margin for vertical centering */
-    text-align: center;
+    margin: auto;
+    margin-top: 10%;  
     padding: 20px;
   }
+.login-form p {
+  margin-left: 5%;
+  color: var(--main-white);
+  font-size: 20;
+  align-self: left;
+}
+.text-imput{
+  margin-left: 5%;
+  margin-right: 5%;
+  height: 30px;
+  width: 90%;
+}
+.input-Button{
+  justify-content: center; /* Center horizontally */
+  margin-top: 40px;
+  margin-left: 25%;
+  margin-right: 25%;
 
-.login-button{
-    margin-top: 10px;
+  width: 50%;
+  height: 50px;
+  border-radius: 5%;
 }
   
