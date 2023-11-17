@@ -2,6 +2,8 @@
 
 
 .box {
+  position: fixed;
+    z-index: 999;
   height: 61px;
   width: 100%;
 }
@@ -111,10 +113,11 @@
 }
 
 .box .div-wrapper {
-  background-color: var(--secondery-black);
+  background-color: var(--secondary-black);
   border-radius: 4px;
   height: 38px;
-  left: 476px;
+  left: 35%;
+  right: 35%;
   position: absolute;
   top: 8px;
   width: 30%;

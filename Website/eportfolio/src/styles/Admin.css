@@ -1,0 +1,474 @@
+.admin {
+    background-color: #1c1c1c;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .admin .div {
+    background-color: var(--main-black);
+    height: 1024px;
+    position: relative;
+    width: 1440px;
+  }
+  
+  .admin .overlap {
+    background-color: var(--secondary-black);
+    height: 689px;
+    left: 674px;
+    position: absolute;
+    top: 309px;
+    width: 740px;
+  }
+  
+  .admin .group {
+    background-color: var(--main-black);
+    border-color: var(--main-black);
+    border-radius: 4px;
+    height: 38px;
+    left: 9px;
+    position: absolute;
+    top: 5px;
+    width: 435px;
+  }
+  
+  .admin .group-2 {
+    height: 32px;
+    left: 6px;
+    position: relative;
+    top: 3px;
+    width: 130px;
+  }
+  
+  .admin .frame {
+    height: 32px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 29px;
+  }
+  
+  .admin .text-wrapper {
+    color: var(--main-gray);
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 15px;
+    font-weight: 400;
+    height: 17px;
+    left: 37px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 8px;
+    white-space: nowrap;
+    width: 91px;
+  }
+  
+  .admin .overlap-group-wrapper {
+    height: 41px;
+    left: 628px;
+    position: absolute;
+    top: 5px;
+    width: 92px;
+  }
+  
+  .admin .overlap-group {
+    background-color: var(--main-red);
+    border-radius: 5px;
+    height: 41px;
+    position: relative;
+    width: 90px;
+  }
+  
+  .admin .text-wrapper-2 {
+    color: #ffffff;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 15px;
+    font-weight: 700;
+    height: 20px;
+    left: 22px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 11px;
+    width: 45px;
+  }
+  
+  .admin .overlap-wrapper {
+    height: 36px;
+    left: 460px;
+    position: absolute;
+    top: 8px;
+    width: 145px;
+  }
+  
+  .admin .overlap-2 {
+    height: 36px;
+    position: relative;
+    width: 143px;
+  }
+  
+  .admin .rectangle {
+    background-color: var(--secondary-black);
+    border: 1px solid;
+    border-color: var(--main-black);
+    border-radius: 5px;
+    height: 33px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 143px;
+  }
+  
+  .admin .img {
+    height: 36px;
+    left: 107px;
+    position: absolute;
+    top: 0;
+    width: 36px;
+  }
+  
+  .admin .text-wrapper-3 {
+    color: var(--main-gray);
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 15px;
+    font-weight: 400;
+    height: 18px;
+    left: 0;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 8px;
+    white-space: nowrap;
+    width: 71px;
+  }
+  
+  .admin .group-3 {
+    background-color: var(--main-black);
+    border-radius: 5px;
+    height: 77px;
+    left: 9px;
+    position: absolute;
+    top: 61px;
+    width: 709px;
+  }
+  
+  .admin .group-4 {
+    height: 51px;
+    left: 7px;
+    position: absolute;
+    top: 13px;
+    width: 220px;
+  }
+  
+  .admin .frame-wrapper {
+    background-color: var(--main-white);
+    border-radius: 25.5px;
+    height: 51px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 51px;
+  }
+  
+  .admin .frame-2 {
+    height: 45px;
+    left: 4px;
+    position: absolute;
+    top: 2px;
+    width: 45px;
+  }
+  
+  .admin .text-wrapper-4 {
+    color: #ffffff;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 15px;
+    font-weight: 700;
+    height: 44px;
+    left: 67px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 3px;
+    width: 151px;
+  }
+  
+  .admin .rectangle-2 {
+    background-color: var(--secondary-black);
+    border: 1px solid;
+    border-color: var(--main-gray);
+    border-radius: 5px;
+    height: 31px;
+    left: 664px;
+    position: absolute;
+    top: 23px;
+    width: 31px;
+  }
+  
+  .admin .group-5 {
+    background-color: var(--secondary-black);
+    border: 1px solid;
+    border-color: var(--main-black);
+    border-radius: 5px;
+    height: 77px;
+    left: 9px;
+    position: absolute;
+    top: 154px;
+    width: 709px;
+  }
+  
+  .admin .group-6 {
+    height: 51px;
+    left: 6px;
+    position: absolute;
+    top: 12px;
+    width: 220px;
+  }
+  
+  .admin .rectangle-3 {
+    background-color: var(--secondary-black);
+    border: 1px solid;
+    border-color: var(--main-gray);
+    border-radius: 5px;
+    height: 31px;
+    left: 663px;
+    position: absolute;
+    top: 22px;
+    width: 31px;
+  }
+  
+  .admin .group-7 {
+    background-color: var(--secondary-black);
+    border: 1px solid;
+    border-color: var(--main-black);
+    border-radius: 5px;
+    height: 77px;
+    left: 9px;
+    position: absolute;
+    top: 257px;
+    width: 709px;
+  }
+  
+  .admin .group-8 {
+    background-color: var(--secondary-black);
+    border: 1px solid;
+    border-color: var(--main-black);
+    border-radius: 5px;
+    height: 77px;
+    left: 9px;
+    position: absolute;
+    top: 355px;
+    width: 709px;
+  }
+  
+  .admin .div-wrapper {
+    background-color: var(--secondary-black);
+    height: 223px;
+    left: 0;
+    position: absolute;
+    top: 58px;
+    width: 1440px;
+  }
+  
+  .admin .text-wrapper-5 {
+    color: #ffffff;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 36px;
+    font-weight: 700;
+    left: 52px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 15px;
+    width: 235px;
+  }
+  
+  .admin .overlap-3 {
+    background-color: var(--secondary-black);
+    height: 286px;
+    left: 30px;
+    position: absolute;
+    top: 314px;
+    width: 608px;
+  }
+  
+  .admin .group-9 {
+    height: 51px;
+    left: 16px;
+    position: absolute;
+    top: 65px;
+    width: 222px;
+  }
+  
+  .admin .text-wrapper-6 {
+    color: #ffffff;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 15px;
+    font-weight: 400;
+    height: 26px;
+    left: 67px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 3px;
+    width: 151px;
+  }
+  
+  .admin .text-wrapper-7 {
+    color: var(--main-red);
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 15px;
+    font-weight: 400;
+    height: 17px;
+    left: 68px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 34px;
+    white-space: nowrap;
+    width: 69px;
+  }
+  
+  .admin .group-10 {
+    height: 51px;
+    left: 16px;
+    position: absolute;
+    top: 133px;
+    width: 222px;
+  }
+  
+  .admin .group-11 {
+    height: 51px;
+    left: 16px;
+    position: absolute;
+    top: 201px;
+    width: 222px;
+  }
+  
+  .admin .text-wrapper-8 {
+    color: #ffffff;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 36px;
+    font-weight: 700;
+    left: 22px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 15px;
+    width: 365px;
+  }
+  
+  .admin .overlap-4 {
+    height: 345px;
+    left: 30px;
+    position: absolute;
+    top: 632px;
+    width: 608px;
+  }
+  
+  .admin .rectangle-4 {
+    background-color: var(--secondary-black);
+    height: 344px;
+    left: 0;
+    position: absolute;
+    top: 1px;
+    width: 608px;
+  }
+  
+  .admin .text-wrapper-9 {
+    color: #ffffff;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 36px;
+    font-weight: 700;
+    left: 22px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 0;
+    width: 365px;
+  }
+  
+  .admin .group-12 {
+    height: 272px;
+    left: 42px;
+    position: absolute;
+    top: 56px;
+    width: 480px;
+  }
+  
+  .admin .group-13 {
+    height: 81px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 480px;
+  }
+  
+  .admin .group-14 {
+    background-color: #d9d9d9;
+    border-radius: 10px;
+    height: 81px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 81px;
+  }
+  
+  .admin .group-15 {
+    background-color: #d9d9d9;
+    border-radius: 10px;
+    height: 81px;
+    left: 101px;
+    position: absolute;
+    top: 0;
+    width: 81px;
+  }
+  
+  .admin .group-16 {
+    background-color: #d9d9d9;
+    border-radius: 10px;
+    height: 81px;
+    left: 202px;
+    position: absolute;
+    top: 0;
+    width: 81px;
+  }
+  
+  .admin .group-17 {
+    background-color: #d9d9d9;
+    border-radius: 10px;
+    height: 81px;
+    left: 302px;
+    position: absolute;
+    top: 0;
+    width: 81px;
+  }
+  
+  .admin .group-18 {
+    background-color: #d9d9d9;
+    border-radius: 10px;
+    height: 81px;
+    left: 399px;
+    position: absolute;
+    top: 0;
+    width: 81px;
+  }
+  
+  .admin .group-19 {
+    height: 81px;
+    left: 0;
+    position: absolute;
+    top: 96px;
+    width: 480px;
+  }
+  
+  .admin .group-20 {
+    height: 81px;
+    left: 0;
+    position: absolute;
+    top: 192px;
+    width: 480px;
+  }
+  
