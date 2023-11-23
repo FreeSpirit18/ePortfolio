@@ -15,17 +15,32 @@ function Form(){
     const submit = async () =>{
         try{
 
-            const handleLogin = await axios.post(api, {
+            const handleLogin = axios.post(api, {
                 email: email,
                 password: password
             });
-            
-            setToken(handleLogin.data.accessToken);
-            localStorage.setItem('AuthToken',token);
-            nav("/");
+            handleLogin.then(Response =>{
+
+                const accessToken = Response.data.accessToken;
+
+                // Set the token in the state
+                setToken(accessToken);
+                // Save the token to local storage
+                localStorage.setItem('AuthToken', accessToken);
+
+                // Navigate to the home route
+                nav("/");
+
+            }).catch(error => {
+                // Handle errors, e.g., display an error message to the user
+                console.error("Login failed:", error);
+                setPassword("");
+                setLoginFailed(true);
+            });
+
         }catch(error){
-            setPassword("");
-            setLoginFailed(true);
+            console.log(error);
+
         }
     }
 

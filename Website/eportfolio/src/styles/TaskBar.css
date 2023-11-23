@@ -47,6 +47,8 @@
 }
 
 .box .frame {
+  filter: invert(100%) sepia(1%) saturate(3202%) hue-rotate(291deg) brightness(113%) contrast(81%);
+  /*hexadecimal color code to a CSS filter*/
   height: 33px;
   left: 200px;
   position: absolute;
@@ -54,7 +56,7 @@
   width: 33px;
 }
 
-.box .group-wrapper {
+.group-wrapper {
   background: linear-gradient(180deg, var(--main-red) 0%, var(--main-white) 180%);
   border-radius: 5px;
   height: 41px;
@@ -67,7 +69,7 @@
 .box .group-2 {
   height: 35px;
   left: 15px;
-  position: relative;
+  position: absolute;
   top: 3px;
   width: 164px;
 }
@@ -112,7 +114,7 @@
   width: 38px;
 }
 
-.box .div-wrapper {
+.search-wrapper {
   background-color: var(--secondary-black);
   border-radius: 4px;
   height: 38px;
@@ -132,24 +134,47 @@
 }
 
 .box .frame-3 {
+  filter: invert(38%) sepia(0%) saturate(0%) hue-rotate(111deg) brightness(91%) contrast(91%);
   height: 32px;
-  left: 0;
+  left: 5px;
   position: absolute;
-  top: 0;
+  top: 3px;
   width: 32px;
 }
 
-.box .text-wrapper-3 {
-  color: var(--main-gray);
+.search-Input {
+  background: transparent;
+  border: none;
+  
   font-family: "Inter-Regular", Helvetica;
   font-size: 15px;
   font-weight: 400;
-  height: 17px;
-  left: 41px;
-  letter-spacing: 0;
-  line-height: normal;
+  height: 30px;
+  left: 40px;
+  top: 2px;
   position: absolute;
-  top: 8px;
   white-space: nowrap;
-  width: 102px;
+  width: 88%;
+}
+.login-button{
+  font-family: "Inter-Bold", Helvetica;
+  font-size: 15px;
+  font-weight: 700;
+  background: linear-gradient(180deg, var(--main-red) 0%, var(--main-white) 180%);  
+  height: 35px;
+  position: absolute;
+  top: 10px;
+  right: 100px;
+  width: 100px;
+}
+.register-button{
+  font-family: "Inter-Bold", Helvetica;
+  font-size: 15px;
+  font-weight: 700;
+  background: linear-gradient(180deg, var(--main-red) 0%, var(--main-white) 180%);  
+  height: 35px;
+  position: absolute;
+  top: 10px;
+  right: 0px;
+  width: 100px;
 }
