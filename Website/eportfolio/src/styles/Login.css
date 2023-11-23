@@ -13,11 +13,11 @@
     margin-top: 10%;  
     padding: 20px;
   }
-.login-form p {
+.default {
   margin-left: 5%;
   color: var(--main-white);
   font-size: 20;
-  align-self: left;
+  text-align: left;
 }
 .text-imput{
   margin-left: 5%;
@@ -35,4 +35,8 @@
   height: 50px;
   border-radius: 5%;
 }
-  
+.error-text{
+  color: var(--main-red);
+  text-align: center;
+  font-size: 12px;
+}
