@@ -45,7 +45,15 @@
     left: 0;
     position: absolute;
     top: 0;
-    width: 44px;
+    width: 280px;
+  }
+
+  .add-image {
+    height: 44px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 80px;
   }
   
   .post .text-wrapper {
@@ -54,7 +62,7 @@
     font-size: 24px;
     font-weight: 700;
     height: 29px;
-    left: 51px;
+    left: 80px;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
@@ -95,38 +103,45 @@
     top: 31px;
     width: 593px;
   }
-  
-  .post .text-wrapper-2 {
-    color: var(--main-gray);
+  input, select, textarea {
+    color: var(--main-white);
+    }
+ .text-wrapper-2 {
+  border: none;
+    background: transparent;
     font-family: "Inter-SemiBold", Helvetica;
     font-size: 15px;
     font-weight: 600;
-    height: 18px;
+    height: 20px;
     left: 10px;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
-    text-align: center;
-    top: 7px;
+    text-align: left;
+    width: 90%;
+    top: 5px;
     white-space: nowrap;
   }
   
-  .post .text-wrapper-3 {
-    color: var(--main-gray);
+.text-wrapper-3 {
+    text-align: left;
+    background: transparent;
     font-family: "Inter-Regular", Helvetica;
     font-size: 14px;
     font-weight: 400;
-    height: 12px;
+    height: 65%;
     left: 5px;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
-    text-align: center;
     top: 42px;
+    overflow: scroll;
     white-space: nowrap;
-    width: 62px;
+    width: 95%;
+    border: none;
+
   }
-  
+
   .post .div-wrapper {
     background-color: var(--secondary-black);
     border-radius: 5px;
@@ -138,19 +153,21 @@
   }
   
   .post .text-wrapper-4 {
-    color: var(--main-gray);
+    border: none;
+    text-align: left;
+    background: transparent;
     font-family: "Inter-Regular", Helvetica;
     font-size: 14px;
     font-weight: 400;
-    height: 12px;
+    height: 60%;
     left: 5px;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
-    text-align: center;
-    top: 19px;
+    text-align: left;
+    top: 10px;
     white-space: nowrap;
-    width: 62px;
+    width: 95%;
   }
   
   .post .p {
@@ -177,6 +194,10 @@
   }
   
   .post .overlap-group-2 {
+    left: 910px;
+    position: absolute;
+    top: 574px;
+    width: 113px;
     background-color: var(--main-red);
     border: 1px solid;
     border-color: var(--main-gray);

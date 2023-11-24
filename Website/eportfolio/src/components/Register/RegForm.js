@@ -14,7 +14,7 @@ function RegForm(){
 
     const submit = async () =>{
         
-        const handleLogin = await axios.post(api, {
+        const handleLogin = axios.post(api, {
             userName: userName,
             email: email,
             password: password,

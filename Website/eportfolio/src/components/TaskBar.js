@@ -10,13 +10,19 @@ function TaskBar(){
     const Register = () =>{
         nav('/register');
     }
+    const Post = () =>{
+        nav('/post');
+    }
+    const GoHome = () =>{
+        nav('/');
+    }
 //Search works
     return(
         <>
         <div className="box">
             <div className="group">
                 <div className="overlap-group">
-                    <text className="text-wrapper">ePortfolio</text>
+                    <text className="text-wrapper" onClick={GoHome}>ePortfolio</text>
 
                     <div  className="search-wrapper">
                         <img className="frame-3" alt="Frame" src={process.env.PUBLIC_URL + '/magnify.svg'} />
@@ -29,7 +35,7 @@ function TaskBar(){
                             <>
                                 <div className="div">
                                     <img className="frame" alt="Frame" src={process.env.PUBLIC_URL + '/bell.svg'} />
-                                    <button className="group-wrapper">
+                                    <button className="group-wrapper" onClick={Post}>
                                         <div className="group-2">
                                             <img className="img" alt="Frame" src={process.env.PUBLIC_URL + '/plus.svg'} />
                                             <div className="text-wrapper-2">Post your work</div>
