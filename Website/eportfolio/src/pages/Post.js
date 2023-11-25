@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import TaskBar from '../components/TaskBar';
 import '../styles/Post.css';
+import { jwtDecode } from 'jwt-decode'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Post() {
     const api = process.env.REACT_APP_API;
@@ -10,6 +12,8 @@ function Post() {
     const [title, setTitle] = useState('');
     const [caption, setCaption] = useState('');
     const [tags, setTags] = useState('');
+    const user = jwtDecode(localStorage.getItem('AuthToken'));
+    const nav = useNavigate();
 
     const handleImageChange = (event) => {
         // Handle image file change
@@ -24,16 +28,17 @@ function Post() {
     };
 
     const handleSubmit = async () => {
-
+        //console.log(handleFile.data);
+        console.log(user.ame)
+        const ownerId = user.sub;
+        
         const formData = new FormData();
         formData.append("file", image);
 
         const handleFile = await axios.post(api+'File/UploadFile', formData);
-        console.log(handleFile.data);
-
-        const handlePost = axios.post(api, {
+        const handlePost = axios.post(api+'Post', {
             id: 0,
-            ownerId: 0,
+            ownerId: ownerId,
             likes: 0,
             location: handleFile.data,
             name: title,
@@ -42,8 +47,8 @@ function Post() {
         });
         handlePost.then(Response =>{
 
-            console.log(Response.data);
-
+            console.log(Response);
+            nav('/profile');
 
         }).catch(error => {
             // Handle errors, e.g., display an error message to the user
@@ -59,16 +64,17 @@ function Post() {
             <div className="post">
                 <div className="div">
                     <div className="overlap">
-                        <div className="group">
-                            <div className="group-2">
-                                <label htmlFor="imageUpload" className="frame">
-                                    <img
-                                    className='add-image'
-                                        alt="Frame"
-                                        src={imageUrl || process.env.PUBLIC_URL + '/image-plus.svg'}
-                                    />
-                                    <div className="text-wrapper">Add image</div>
-                                </label>
+                        <div className='image-select'>
+
+                            <div className="group">
+                            <label htmlFor="imageUpload" className="frame">
+                                <img
+                                className='add-image'
+                                    alt="Frame"
+                                    src={imageUrl || process.env.PUBLIC_URL + '/image-plus.svg'}
+                                />
+                                <div className="text-wrapper">Add image</div>
+                                    </label>
                                 <input
                                 className='image-input'
                                     id="imageUpload"
@@ -78,44 +84,49 @@ function Post() {
                                     onChange={handleImageChange}
                                 />
                             </div>
+                            <p className="JPEG-GIF-PNG-you-can">
+                                JPEG / GIF / PNG
+                                <br />
+                                You can upload up to 32 MB per file
+                            </p>
                         </div>
-                        <p className="JPEG-GIF-PNG-you-can">
-                            JPEG / GIF / PNG
-                            <br />
-                            You can upload up to 32 MB per file
-                        </p>
                     </div>
-                    <div className="overlap-group">
-                        <img className="line" alt="Line" src="line-1.svg" />
-                        <input
-                            type="text"
-                            className="text-wrapper-2"
-                            placeholder="Title"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
+                    <form className='post-form'>
+                        <div className="overlap-group">
+                            <img className="line" alt="Line" src="line-1.svg" />
+                            <input
+                                type="text"
+                                className="text-wrapper-2"
+                                placeholder="Title"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
 
+                            <input
+                                type="text"
+                                className="text-wrapper-3"
+                                placeholder="Caption"
+                                value={caption}
+                                onChange={(e) => setCaption(e.target.value)}
+                            />
+                        </div>
+                        <div className="div-wrapper">
+                            <input
+                                type="text"
+                                className="text-wrapper-4"
+                                placeholder="Tags"
+                                value={tags}
+                                onChange={(e) => setTags(e.target.value)}
+                            />
+                        </div>
+                        <p className="p">Add up to 30 tags</p>
                         <input
-                            type="text"
-                            className="text-wrapper-3"
-                            placeholder="Caption"
-                            value={caption}
-                            onChange={(e) => setCaption(e.target.value)}
-                        />
-                    </div>
-                    <div className="div-wrapper">
-                        <input
-                            type="text"
-                            className="text-wrapper-4"
-                            placeholder="Tags"
-                            value={tags}
-                            onChange={(e) => setTags(e.target.value)}
-                        />
-                    </div>
-                    <p className="p">Add up to 30 tags</p>
-                    <button className="overlap-group-2" onClick={handleSubmit}>
-                        Submit now
-                    </button>
+                            className="overlap-group-2"
+                            type="button"
+                            onClick={handleSubmit}
+                            value={"Submit now"} />
+
+                    </form>
                 </div>
             </div>
         </>

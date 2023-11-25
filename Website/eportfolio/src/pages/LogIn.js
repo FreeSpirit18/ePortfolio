@@ -3,7 +3,6 @@ import Form from "../components/LogIn/Form";
 import '../styles/Login.css'
 
 function Login(){
-    const api = process.env.REACT_APP_API;
 
     return(
         <>

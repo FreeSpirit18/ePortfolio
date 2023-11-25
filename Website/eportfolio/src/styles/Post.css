@@ -2,32 +2,41 @@
     background-color: #1c1c1c;
     display: flex;
     flex-direction: row;
+    position: absolute;
     justify-content: center;
     width: 100%;
   }
   
-  .post .div {
+  .div {
     background-color: var(--main-black);
+    display: flex;
+    position: absolute;
+
+    flex-direction: row;
     height: 1024px;
-    position: relative;
-    width: 1440px;
+    width: 2000px;
   }
-  
+  .post-form{
+    width: 603px;
+    height: 100%;
+    margin-left: 35%;
+  }
   .post .overlap {
+    
     background-color: var(--secondary-black);
     height: 223px;
     left: 0;
     position: absolute;
     top: 58px;
-    width: 1440px;
+    width: 100%;
   }
   
-  .post .group {
+  .group {
     background-color: var(--main-red);
     border-radius: 50px;
     height: 59px;
-    left: 507px;
-    position: absolute;
+    left: 0px;
+    position: relative;
     top: 56px;
     width: 420px;
   }
@@ -43,16 +52,16 @@
   .post .frame {
     height: 44px;
     left: 0;
-    position: absolute;
+    position: relative;
     top: 0;
-    width: 280px;
+    width: 400px;
   }
 
   .add-image {
     height: 44px;
-    left: 0;
-    position: absolute;
-    top: 0;
+    left: 0px;
+    position: relative;
+    top: 8px;
     width: 80px;
   }
   
@@ -62,12 +71,13 @@
     font-size: 24px;
     font-weight: 700;
     height: 29px;
-    left: 80px;
+    left: 0px;
+    width: 300px;
     letter-spacing: 0;
     line-height: normal;
-    position: absolute;
+    position: relative;
     text-align: center;
-    top: 10px;
+    top: 0px;
   }
   
   .post .JPEG-GIF-PNG-you-can {
@@ -76,12 +86,11 @@
     font-size: 16px;
     font-weight: 400;
     height: 39px;
-    left: 519px;
+    left: 0px;
     letter-spacing: 0;
     line-height: normal;
-    position: absolute;
-    text-align: center;
-    top: 127px;
+    position: relative;
+    top: 60px;
     width: 413px;
   }
   
@@ -89,8 +98,8 @@
     background-color: var(--secondary-black);
     border-radius: 5px;
     height: 146px;
-    left: 418px;
-    position: absolute;
+    
+    position: relative;
     top: 333px;
     width: 603px;
   }
@@ -103,7 +112,7 @@
     top: 31px;
     width: 593px;
   }
-  input, select, textarea {
+  .text-wrapper-2, .text-wrapper-3, .text-wrapper-4 {
     color: var(--main-white);
     }
  .text-wrapper-2 {
@@ -146,9 +155,8 @@
     background-color: var(--secondary-black);
     border-radius: 5px;
     height: 51px;
-    left: 418px;
-    position: absolute;
-    top: 512px;
+    position: relative;
+    top: 370px;
     width: 603px;
   }
   
@@ -169,19 +177,24 @@
     white-space: nowrap;
     width: 95%;
   }
-  
-  .post .p {
+  .image-select{
+    text-align: center;
+    width: 420px;
+    height: 200px;
+    margin-left: 40%;
+  }
+  .p {
     color: var(--main-gray);
     font-family: "Inter-SemiBold", Helvetica;
     font-size: 14px;
     font-weight: 600;
     height: 28px;
-    left: 410px;
+    left: 0px;
     letter-spacing: 0;
     line-height: normal;
-    position: absolute;
+    position: relative;
     text-align: center;
-    top: 484px;
+    top: 280px;
     width: 136px;
   }
   
@@ -193,11 +206,9 @@
     width: 113px;
   }
   
-  .post .overlap-group-2 {
-    left: 910px;
-    position: absolute;
-    top: 574px;
-    width: 113px;
+  .overlap-group-2 {
+    left: 85%;
+    top: 400px;
     background-color: var(--main-red);
     border: 1px solid;
     border-color: var(--main-gray);

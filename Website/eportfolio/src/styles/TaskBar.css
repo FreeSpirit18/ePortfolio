@@ -145,7 +145,7 @@
 .search-Input {
   background: transparent;
   border: none;
-  
+  color: var(--main-white);
   font-family: "Inter-Regular", Helvetica;
   font-size: 15px;
   font-weight: 400;

@@ -26,7 +26,7 @@ function Form(){
                 // Set the token in the state
                 setToken(accessToken);
                 // Save the token to local storage
-                localStorage.setItem('AuthToken', accessToken);
+                localStorage.setItem('AuthToken', token);
 
                 // Navigate to the home route
                 nav("/");

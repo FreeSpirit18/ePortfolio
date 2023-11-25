@@ -36,7 +36,8 @@ namespace ePortfolioAPI.Controllers
                 var container = new BlobContainerClient(ConnectionString, Name);
                 await container.UploadBlobAsync(fileName, new  MemoryStream(array));
 
-                return Ok(fileName);
+                var ImageUrl = container.Uri.ToString();
+                return Ok(ImageUrl+$@"/{fileName}");
 
             }
             catch (Exception ex)
