@@ -3,23 +3,45 @@ import TaskBar from "../components/TaskBar"
 import '../styles/Home.css'
 import axios from 'axios';
 import { useState } from "react";
+import { useNavigate  } from "react-router-dom";
 
 
  function Home(){
     const api = process.env.REACT_APP_API;
-
+    const heart = process.env.PUBLIC_URL + '/heart-outline.svg'
     const [posts, setPosts] = useState([]);
+    const [tab, setTab] = useState(1);
   
+
+    const nav = useNavigate();
+
     useEffect(() => {
         const handlePost = axios.get(api+'Post');
-        handlePost.then(Response =>{
+        handlePost.then(response =>{
 
-            setPosts(Response.data)
-            console.log(posts[0]);
+            let sortedPosts;
+
+            if (tab === 1) {
+                // Sort by likes (assuming there's a 'likes' property in your post objects)
+                sortedPosts = response.data.sort((a, b) => b.likes - a.likes);
+            } else {
+                // Sort by creationDate (assuming there's a 'creationDate' property in your post objects)
+                sortedPosts = response.data.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
+            }
+
+            setPosts(sortedPosts);
         })
-      }, []);
+      }, [api, tab]);
 
-    const heart = process.env.PUBLIC_URL + '/heart-outline.svg'
+
+      const ToggleTab=(index)=>{
+        setTab(index);
+      }
+
+      const handlePostClic = (id) => {
+        nav(`/viewpost/${id}`);
+
+      }
     return(
         <>
             <TaskBar/>
@@ -27,71 +49,20 @@ import { useState } from "react";
                 
                 <div className="div">
                     <div className="overlap">
-                        <div className="text-wrapper-4">Popular</div>
-                        <div className="rectangle" />
-                        <div className="text-wrapper-5">Latest</div>
+                        <div className="text-wrapper-4" onClick={()=>ToggleTab(1)}>Popular</div>
+                        <div className={tab === 1 ? "rectangle-under-popular":"rectangle-under-latest"} />
+                        <div className="text-wrapper-5" onClick={()=>ToggleTab(2)}>Latest</div>
                     </div>
                     <div className="grid-container">
                         {posts.map((post) => (
-                            <div key={post.id} className="grid-item">
-                                <img src={post.location} alt={post.name} />
-                                <p>{post.name}</p>
+                            <div key={post.id} className="grid-item" onClick={()=>handlePostClic(post.id)}>
+                                <img className="post-img" src={post.location} alt={post.name} />
+                                {/* <img className="heart-icon" alt="Frame" src={heart} /> */}
                             </div>
+                            
                         ))}
                     </div>
-                    {/* <div className="group-5">
-                        <div className="group-6">
-                            <img className="img-wrapper" src="https://eportfoliostore.blob.core.windows.net/pictures/638365236654614390_4f40c61c-5adf-4327-98fa-c1e4dc24a0e0.jpg">
-                                
-                            </img>
-                            <div className="group-7">
-                            <img className="frame-4" alt="Frame" src={heart} />
-                            </div>
-                            <div className="group-8">
-                            <img className="frame-4" alt="Frame" src={heart} />
-                            </div>
-                            <div className="group-9">
-                            <img className="frame-4" alt="Frame" src={heart} />
-                            </div>
-                            <div className="group-10">
-                            <img className="frame-4" alt="Frame" src={heart} />
-                            </div>
-                        </div>
-                        <div className="group-11">
-                            <div className="img-wrapper">
-                            <img className="frame-4" alt="Frame" src={heart} />
-                            </div>
-                            <div className="group-7">
-                            <img className="frame-4" alt="Frame" src={heart} />
-                            </div>
-                            <div className="group-8">
-                            <img className="frame-4" alt="Frame" src={heart} />
-                            </div>
-                            <div className="group-9">
-                            <img className="frame-4" alt="Frame" src={heart} />
-                            </div>
-                            <div className="group-10">
-                            <img className="frame-4" alt="Frame" src={heart} />
-                            </div>
-                        </div>
-                        <div className="group-12">
-                            <div className="img-wrapper">
-                            <img className="frame-4" alt="Frame" src={heart} />
-                            </div>
-                            <div className="group-7">
-                            <img className="frame-4" alt="Frame" src={heart} />
-                            </div>
-                            <div className="group-8">
-                            <img className="frame-4" alt="Frame" src={heart} />
-                            </div>
-                            <div className="group-9">
-                            <img className="frame-4" alt="Frame" src={heart} />
-                            </div>
-                            <div className="group-10">
-                            <img className="frame-4" alt="Frame" src={heart} />
-                            </div>
-                        </div>
-                    </div> */}
+                    
                 </div>
             </div>
         </>

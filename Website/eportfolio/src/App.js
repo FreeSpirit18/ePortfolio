@@ -21,7 +21,7 @@ function App() {
             <Route path='/admin' element={<Admin />}/>
             <Route path='/post' element={<Post />}/>
             <Route path='/profile' element={<Profile />}/>
-            <Route path='/viewPost' element={<ViewPost />}/>
+            <Route path='/viewPost/:postId' element={<ViewPost />}/>
 
 
             <Route path='*' element={<NoPage/>}/>
