@@ -27,9 +27,8 @@ function Post() {
         }
     };
 
-    const handleSubmit = async () => {
-        //console.log(handleFile.data);
-        console.log(user.ame)
+    const handleSubmit = async () => { 
+        
         const ownerId = user.sub;
         
         const formData = new FormData();

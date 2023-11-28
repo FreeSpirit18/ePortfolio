@@ -1,9 +1,17 @@
+import { useNavigate, useParams } from "react-router-dom";
 import TaskBar from "../components/TaskBar";
 import '../styles/Profile.css'
+import { jwtDecode } from "jwt-decode";
 
 function Profile(){
     const api = process.env.REACT_APP_API;
     const img = process.env.PUBLIC_URL;
+    const acc = process.env.PUBLIC_URL ;
+    const user = jwtDecode(localStorage.getItem('AuthToken'));
+    const nav = useNavigate();
+
+    const{userId} = useParams();
+
     return(
         <>
             <TaskBar/>

@@ -111,6 +111,17 @@ namespace ePortfolioAPI.Controllers
             return Ok(new SuccessfulLoginDto(accessToken));
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<User>>> Get(int id)
+        {
+            var user = await _dbContext.User.FindAsync(id);
+            if (user == null)
+            {
+                return BadRequest("User not found.");
+            }
+            return Ok(user.UserName);
+        }
+
         [HttpPut]
         [Authorize]
         public async Task<ActionResult<List<User>>> Put(UserDto req)

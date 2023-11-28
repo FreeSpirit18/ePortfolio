@@ -32,6 +32,17 @@ namespace ePortfolioAPI.Controllers
             return Ok(folder);
         }
 
+        [HttpGet("ByUser/{id}")]
+        public async Task<ActionResult<List<Folder>>> GetByUser(int id)
+        {
+            var folder = await _dbContext.Folder.FirstOrDefaultAsync(f => f.OwnerId == id && f.Name == "favorite");
+            if (folder == null)
+            {
+                return BadRequest("Folder not found.");
+            }
+            return Ok(folder.Id);
+        }
+
         [HttpPost]
         public async Task<ActionResult<List<Folder>>> Post(Folder folder)
         {
