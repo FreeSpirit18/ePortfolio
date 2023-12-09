@@ -4,6 +4,7 @@ import '../styles/ViewPost.css'
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
+import Modal from "../components/Modal/Modal";
 
 
 function ViewPost(){
@@ -19,9 +20,7 @@ function ViewPost(){
     const [comment, setComment] = useState("");
     const [faveId, setfaveId] = useState("");
     const [liked, setLiked] = useState(null);
-
-
-
+    const [foldersVis, setFoldersVis] = useState(false);
 
 
     useEffect(() => {
@@ -157,7 +156,6 @@ function ViewPost(){
                 <div className="div">
                     <div className="group">
                         <img className="rectangle" src={post.location} alt={post.name}/>
-                        <img className="frame" alt="Frame" src={acc + '/fullscreen.svg'} />
                     </div>
                     <div className="overlap">
                         <div className="rectangle-2" />
@@ -171,7 +169,7 @@ function ViewPost(){
                             {post.description}
                         </p>
                         <div className="text-wrapper-2">#digital #fantasy #portrait</div>
-                        <img className="frame-2" alt="Frame" src={acc + '/bookmark-multiple.svg'} />
+                        <Modal postId={post.id}/>
                     </div>
                     <div className="overlap-group">
                         <div className="frame-wrapper">
@@ -199,13 +197,6 @@ function ViewPost(){
 
                         </form>
 
-                        
-                        {/* <div className="group-2">
-                            <div className="img-wrapper">
-                            <img className="frame-3" alt="Frame" src={acc + '/account.svg'} />
-                            </div>
-                            <div className="text-wrapper-6">Comment</div>
-                        </div> */}
                         <div className="comment-grid">
 
                             {comments.map((comment) => (
@@ -217,6 +208,7 @@ function ViewPost(){
                                 </div>
                             ))}
                         </div>
+                        
                     </div>
                 </div>
             </div>

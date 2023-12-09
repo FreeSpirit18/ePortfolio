@@ -1,0 +1,71 @@
+body.active-modal {
+    overflow-y: hidden;
+}
+
+.btn-modal {
+    filter: invert(100%) sepia(1%) saturate(3202%) hue-rotate(291deg) brightness(113%) contrast(81%);
+    margin: 4px 0 0 10px;
+    position: relative;
+    height: 41px;
+    width: 41px;
+}
+
+.modal, .overlay {
+    z-index: 5;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    
+}
+
+.overlay {
+    background: rgba(49,49,49,0.8);
+}
+.modal-content {
+    z-index: 6;
+    width: 370px;
+    height: 455px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background: var(--main-white);
+    padding: 14px 28px;
+    border-radius: 3px;
+    
+    
+}
+.folder-container {
+    display: flex;
+    flex-direction: column;
+    height: 340px;
+    padding-bottom: 10px;
+    overflow-y: auto; /* Add this to enable vertical scrollbar */
+  }
+  
+  .folder-grid {
+    position: relative;
+    padding: 0;
+    height: auto; /* Adjusted to allow flexible height based on content */
+    display: flex;
+    flex-direction: row; /* Display in rows */
+    align-items: center; /* Align items in the center vertically */
+    justify-content: space-between; /* Space items evenly horizontally */
+    border-bottom: 1px solid #ccc; /* Optional: Add a border between folders */
+    padding: 8px; /* Optional: Add padding for better spacing */
+  }
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 60px;
+    height: 40px;
+    padding: 5px 7px;
+}
+
