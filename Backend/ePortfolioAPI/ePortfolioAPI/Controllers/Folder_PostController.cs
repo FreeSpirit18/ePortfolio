@@ -59,6 +59,22 @@ namespace ePortfolioAPI.Controllers
             await _dbContext.SaveChangesAsync();
             return Ok(await _dbContext.Folder_Post.ToListAsync());
         }
+        [HttpPost("Exists")]
+        public async Task<ActionResult<List<Folder_Post>>> Exists(Folder_Post folder_post)
+        {
+            //------Foreig key check-------------------------------
+
+            var existingConnection = await _dbContext.Folder_Post.FirstOrDefaultAsync(
+                t => t.FolderId == folder_post.FolderId && t.PostId == folder_post.PostId
+                );
+
+            if (existingConnection == null)
+                return Conflict("Connection dose not exist.");
+
+            //---------------------------------------------------------
+
+            return Ok(existingConnection);
+        }
 
         [HttpPut]
         public async Task<ActionResult<List<Folder_Post>>> Put(Folder_Post req)

@@ -18,53 +18,54 @@ function ViewPost(){
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState("");
     const [faveId, setfaveId] = useState("");
-
+    const [liked, setLiked] = useState(null);
 
 
 
 
 
     useEffect(() => {
-        const handlePost = axios.get(api+'Post/'+postId);
-        handlePost.then(response =>{
+        const fetchPost = axios.get(api + 'Post/' + postId);
+        const fetchArtist = fetchPost.then(response => axios.get(api + 'User/' + response.data.ownerId));
+        const fetchFave = fetchPost.then(response => axios.get(api + 'Folder/ByUser/' + user.sub));
 
-            setPost(response.data);
-            
-
-            const handleArtist = axios.get(api+'User/'+response.data.ownerId);
-            handleArtist.then(response =>{
-                console.log(response.data)
-                setArtistName(response.data)
-            }).catch((error) => {
-                console.error('Error fetching post comments:', error);
+        Promise.all([fetchPost, fetchArtist, fetchFave])
+            .then(([postResponse, artistResponse, faveResponse]) => {
+                setPost(postResponse.data);
+                setArtistName(artistResponse.data);
+                setfaveId(faveResponse.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
             });
-
-
-            const handleFave = axios.get(api+'Folder/ByUser/'+user.sub);
-            handleFave.then(response =>{
-                console.log(response.data);
-                setfaveId(response.data);
-
-            }).catch((error) => {
-                console.error('Error fetching favorite folder id:', error);
-            });
-
-        }).catch((error) => {
-            console.error('Error fetching post data:', error);
-          });
       }, []);
 
       useEffect(() => {
         const handlePost = axios.get(api+'Comment/ByPostId/'+postId);
         handlePost.then(response =>{
-            console.log(response.data)
             setComments(response.data)
         }).catch((error) => {
             console.error('Error fetching post comments:', error);
           });
       }, [api, postId]);
 
+      useEffect(()=>{
+        if(post !== null){
 
+            const handleLike = axios.post(api + "Folder_Post/Exists",{
+                id: 0,
+                folderId: faveId,
+                postId: post.id
+              });
+              handleLike.then(responce =>{
+                    setLiked(responce.data)
+                }).catch(error =>{
+                    console.error("IsLiked error: ", error)
+                });
+        }
+      },[post])
+
+    
 
       const SubmitComment = ()=>{
         if(comment !== ""){
@@ -81,18 +82,68 @@ function ViewPost(){
             handleSubmit.then(responce =>{
                 window.location.reload();
             }).catch(error =>{
-                console.log(error)
+                console.error("Comment submit error: ", error)
             })
         }
       }
 
       const NavToArtist = ()=>{
-        console.log('veikia');
+        
         if(post !== null){
             
             nav(`/profile/${post.ownerId}`);
             
         }
+      }
+
+      const Like =()=>{
+        const handleLike = axios.post(api + "Folder_Post",{
+            id: 0,
+            folderId: faveId,
+            postId: post.id
+          });
+          handleLike.then(responce =>{
+            //window.location.reload();
+            }).catch(error =>{
+            console.error("Comment submit error: ", error)
+            });
+        const handleUpdate = axios.put(api + "Post",{
+            id: post.id,
+            ownerId: post.ownerId,
+            likes: post.likes+1,
+            location: post.location,
+            name: post.name,
+            description: post.description,
+            creationDate: "2023-09-29T12:36:59.681Z"
+          });
+            handleUpdate.then(responce =>{
+            window.location.reload();
+            }).catch(error =>{
+            console.error("Comment submit error: ", error)
+            })
+      }
+
+      const  UnLike = async ()=>{
+        const handleLike = axios.delete(api + "Folder_Post/"+liked.id);
+
+          handleLike.then(responce =>{
+            }).catch(error =>{
+            console.error("Comment submit error: ", error)
+            });
+        const handleUpdate = axios.put(api + "Post",{
+            id: post.id,
+            ownerId: post.ownerId,
+            likes: post.likes-1,
+            location: post.location,
+            name: post.name,
+            description: post.description,
+            creationDate: "2023-09-29T12:36:59.681Z"
+          });
+            handleUpdate.then(responce =>{
+            window.location.reload();
+            }).catch(error =>{
+            console.error("Comment submit error: ", error)
+            })
       }
 
       if (!post) {
@@ -110,10 +161,11 @@ function ViewPost(){
                     </div>
                     <div className="overlap">
                         <div className="rectangle-2" />
-                        <img className="img" alt="Frame" src={acc + '/heart-outline.svg'} />
+                        {liked === null ? (<img className="img" alt="Frame" src={acc + '/heart-outline.svg'} onClick={Like}/>):
+                        (<img className="img" alt="Frame" src={acc + '/full-heart.svg'} onClick={UnLike}/>)}
+                        
                         <div className="text-wrapper">{post.name}
                         </div>
-                        <img className="line" alt="Line" src={acc + '/heart-outline.svg'} />
                         <div className="rectangle-3" />
                         <p className="lorem-ipsum-is">
                             {post.description}
