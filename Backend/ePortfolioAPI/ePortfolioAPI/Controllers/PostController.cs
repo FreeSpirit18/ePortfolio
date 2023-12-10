@@ -31,6 +31,16 @@ namespace ePortfolioAPI.Controllers
             }
             return Ok(post);
         }
+        [HttpGet("AllOfUser/{id}")]
+        public async Task<ActionResult<List<Post>>> GetAllOfUser(int id)
+        {
+            var posts = await _dbContext.Post.Where(p => p.OwnerId == id).ToListAsync();
+            if (posts == null)
+            {
+                return BadRequest("Post's not found.");
+            }
+            return Ok(posts);
+        }
 
         [HttpPost]
         public async Task<ActionResult<List<Post>>> Post(Post post)

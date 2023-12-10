@@ -32,6 +32,16 @@ namespace ePortfolioAPI.Controllers
             }
             return Ok(folder_post);
         }
+        [HttpGet("AllOfFolder/{id}")]
+        public async Task<ActionResult<List<Folder_Post>>> AllOfFolderGet(int id)
+        {
+            var folder_posts = await _dbContext.Folder_Post.Where(p => p.FolderId == id).ToListAsync();
+            if (folder_posts == null)
+            {
+                return BadRequest("Folder_Post not found.");
+            }
+            return Ok(folder_posts);
+        }
 
         [HttpPost]
         public async Task<ActionResult<List<Folder_Post>>> Post(Folder_Post folder_post)

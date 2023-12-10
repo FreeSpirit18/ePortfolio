@@ -1,8 +1,9 @@
+import { jwtDecode } from 'jwt-decode';
 import '../styles/TaskBar.css'
 import { Link, useNavigate } from 'react-router-dom';
 
 function TaskBar(){
-    const Token = localStorage.getItem('AuthToken'); 
+    const Token = jwtDecode(localStorage.getItem('AuthToken'));
     const nav = useNavigate();
     const Login = () =>{
         nav('/login');
@@ -15,6 +16,9 @@ function TaskBar(){
     }
     const GoHome = () =>{
         nav('/');
+    }
+    const GoToProfile = () =>{
+        nav(`/profile/${Token.sub}`);
     }
 //Search works
     return(
@@ -42,7 +46,7 @@ function TaskBar(){
                                         </div>
                                     </button>
                                     <div className="frame-wrapper">
-                                        <img className="frame-2" alt="Frame" src={process.env.PUBLIC_URL + '/account.svg'} />
+                                        <img onClick={GoToProfile} className="frame-2" alt="Frame" src={process.env.PUBLIC_URL + '/account.svg'} />
                                     </div>
                                 </div>
                             </>

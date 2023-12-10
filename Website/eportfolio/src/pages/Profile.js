@@ -2,6 +2,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import TaskBar from "../components/TaskBar";
 import '../styles/Profile.css'
 import { jwtDecode } from "jwt-decode";
+import { useEffect, useState } from "react";
+import axios from 'axios'; 
 
 function Profile(){
     const api = process.env.REACT_APP_API;
@@ -11,6 +13,69 @@ function Profile(){
     const nav = useNavigate();
 
     const{userId} = useParams();
+    // const userName = axios.get(api + 'User/' + userId).data;
+
+    const[userName, setUserName] = useState([]);
+    const[folders, setFolders] = useState([]);
+    const[posts, setPosts] = useState([]);
+    const[tab, setTab] = useState(1);
+    const[selectedFolder, setSelectedFolder] = useState();
+    const[selectedFolderPosts, setSelectedFolderPosts] = useState([]);
+
+    useEffect(() => {
+        const fetchFolders = axios.get(api + 'Folder/AllUserFolders/' + user.sub);
+        fetchFolders.then(Response =>{
+            setFolders(Response.data);
+        })
+
+        const fetchName = axios.get(api + 'User/' + userId)
+        fetchName.then(Response =>{
+            setUserName(Response.data)
+        }).catch(error => {
+            console.error('Error fetching data:', error);
+        });
+        
+    }, []);
+
+    useEffect(() => {
+        const fetchPost = axios.get(api + 'Post/AllOfUser/' + user.sub);
+        fetchPost.then(Response =>{
+            setPosts(Response.data);
+        })
+    
+    }, []);
+    
+
+    const ToggleTab =(index)=>{
+        setTab(index);
+        setSelectedFolder();
+        setSelectedFolderPosts([]);
+    }
+
+    const ToggleFolder =(id)=>{
+        setSelectedFolder(id);
+        setSelectedFolderPosts([]);
+
+        const fetchFolderCon = axios.get(api + 'Folder_Post/AllOfFolder/' + id);
+        fetchFolderCon.then(Response =>{
+            const connect = Response.data;
+
+            const fetchPostPromises = connect.map((element) =>
+            axios.get(api + 'Post/' + element.postId)
+            );
+
+            Promise.all(fetchPostPromises)
+            .then((responses) => {
+                const postsData = responses.map((response) => response.data);
+                setSelectedFolderPosts(postsData);
+                console.log(postsData); // Log the updated state here
+            })
+            .catch((error) => {
+                console.error('Error fetching posts:', error);
+            });
+        })
+        console.log(selectedFolderPosts);
+    }
 
     return(
         <>
@@ -18,61 +83,88 @@ function Profile(){
             <div className="profile">
                 <div className="div">
                     <div className="overlap">
-                    <div className="overlap-group">
-                        <div className="rectangle" />
-                        <div className="group">
-                        <img className="frame" alt="Frame" src={img + '/account.svg'}/>
+                        <div className="overlap-group">
+                            <div className="rectangle" />
+                            <div className="group">
+                                <img className="frame" alt="Frame" src={img + '/account.svg'}/>
+                            </div>
+                            <div className="text-wrapper">{userName}</div>
                         </div>
-                        <div className="text-wrapper">Artist name</div>
-                    </div>
-                    <p className="p">Member since 2023-11-08 | 54 post</p>
+                        <p className="p">{posts.length} post</p>
                     </div>
                     <div className="overlap-2">
-                    <div className="group-2">
-                        <img className="img" alt="Frame" src={img + '/heart-outline.svg'} />
-                        <div className="text-wrapper-2">Favorite</div>
-                    </div>
-                    <div className="group-wrapper">
-                        <div className="group-3">
-                        <img className="frame-2" alt="Frame" src={img + '/bookmark-multiple.svg'} />
-                        <div className="text-wrapper-3">Saved</div>
+
+                    <div
+                        className={`post-tab-wrapper ${tab === 1 ? 'active-tab' : ''}`}
+                        onClick={() => ToggleTab(1)}
+                    >
+                        <div className="group-4">
+                        <img className="frame-3" alt="Frame" src={`${img}/image-area.svg`} />
+                        <div className="text-wrapper-4">Posts</div>
                         </div>
                     </div>
-                    <div className="group-4">
-                        <img className="frame-3" alt="Frame" src={img + '/image-area.svg'} />
-                        <div className="text-wrapper-4">Posts</div>
+
+                    <div
+                        className={`folder-tab-wrapper ${tab === 2 ? 'active-tab' : ''}`}
+                        onClick={() => ToggleTab(2)}
+                    >
+                        <div className="group-3">
+                        <img className="frame-2" alt="Frame" src={`${img}/bookmark-multiple.svg`} />
+                        <div className="tab-wrapper">Folders</div>
+                        </div>
                     </div>
-                    <div className="group-5">
-                        <img className="frame-4" alt="Frame" src={img + '/folder.svg'} />
-                        <div className="text-wrapper-5">Fantasy</div>
-                    </div>
+                        {tab === 2 ? <div className="group-5">
+                            <div className="profile-folder-container">
+
+                                {folders.map((folder) => (
+                                    <div key={folder.id} 
+                                    className={`profile-folder-grid ${selectedFolder === folder.id ? 'selected-folder' : ''}`}
+
+                                    onClick={()=> ToggleFolder(folder.id)}>
+                                        <img className="folder-icon" alt="Frame" src={img + '/folder.svg'} />
+                                    
+                                        <div className="profile-folder-wrapper">
+                                        {folder.name}
+
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            
+                        </div>
+                        :
+                        <></>}
+                        
                     </div>
                     <div className="overlap-3">
-                    <div className="rectangle-2" />
-                    <div className="group-6">
-                        <div className="group-7">
-                        <div className="group-8" />
-                        <div className="group-9" />
-                        <div className="group-10" />
-                        <div className="group-11" />
-                        <div className="group-12" />
+                        <div className="rectangle-2" />
+                        <div className="group-6">
+                            {tab === 1 ? 
+                            <div className="profile-grid-container">
+                                {posts.map((post) => (
+                                    <div key={post.id} className="profile-grid-item" >
+                                        <img className="profile-post-img" src={post.location} alt={post.name} />
+                                        {/* <img className="heart-icon" alt="Frame" src={heart} /> */}
+                                    </div>
+                                    
+                                ))}
+                            </div>
+                            :
+                            <div className="profile-grid-container">
+                                {selectedFolderPosts.map((post) => (
+                                    <div key={post.id} className="profile-grid-item" >
+                                        <img className="profile-post-img" src={post.location} alt={post.name} />
+                                        {/* <img className="heart-icon" alt="Frame" src={heart} /> */}
+                                    </div>
+                                    
+                                ))}
+                            </div>
+                            }
+                                        
+                            
+                            
+                            
                         </div>
-                        <div className="group-13">
-                        <div className="group-8" />
-                        <div className="group-9" />
-                        <div className="group-10" />
-                        <div className="group-11" />
-                        <div className="group-12" />
-                        </div>
-                        <div className="group-14">
-                        <div className="group-8" />
-                        <div className="group-9" />
-                        <div className="group-10" />
-                        <div className="group-11" />
-                        <div className="group-12" />
-                        </div>
-                    </div>
-                    <div className="text-wrapper-6">Fantasy</div>
                     </div>
                 </div>
             </div>

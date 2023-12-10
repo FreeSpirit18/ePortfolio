@@ -123,15 +123,17 @@
     width: 94px;
   }
   
-  .profile .group-wrapper {
-    background-color: var(--main-black);
-    border-radius: 5px;
-    height: 45px;
-    left: 6px;
-    position: absolute;
-    top: 113px;
-    width: 363px;
-  }
+  .folder-tab-wrapper,
+.post-tab-wrapper {
+  border-radius: 5px;
+  height: 45px;
+  width: 95%;
+  cursor: pointer;
+}
+
+.active-tab {
+  background: linear-gradient(180deg, var(--main-red) 0%, var(--main-white) 180%);
+}
   
   .profile .group-3 {
     height: 34px;
@@ -149,7 +151,7 @@
     width: 33px;
   }
   
-  .profile .text-wrapper-3 {
+  .tab-wrapper {
     color: #ffffff;
     font-family: "Inter-Regular", Helvetica;
     font-size: 20px;
@@ -165,9 +167,9 @@
   
   .profile .group-4 {
     height: 33px;
-    left: 10px;
-    position: absolute;
-    top: 69px;
+    left: 6px;
+    position: relative;
+    top: 10px;
     width: 141px;
   }
   
@@ -194,20 +196,13 @@
   }
   
   .profile .group-5 {
-    height: 30px;
-    left: 33px;
-    position: absolute;
-    top: 165px;
-    width: 189px;
+    left: 50px;
+    position: relative;
+    top: 5px;
+    height: 340px;
+    width: 300px;
   }
   
-  .profile .frame-4 {
-    height: 30px;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 30px;
-  }
   
   .profile .text-wrapper-5 {
     color: var(--main-gray);
@@ -300,10 +295,10 @@
     background-color: #d9d9d9;
     border-radius: 10px;
     height: 134px;
+    width: 134px;
     left: 661px;
     position: absolute;
     top: 0;
-    width: 134px;
   }
   
   .profile .group-13 {
@@ -336,3 +331,58 @@
     width: 199px;
   }
   
+  .profile-folder-container {
+    display: flex;
+    flex-direction: column;
+    height: 340px;
+    width: 300px;
+    padding-bottom: 10px;
+    overflow-y: auto; /* Add this to enable vertical scrollbar */
+  }
+  
+  .profile-folder-grid {
+    position: relative;
+    min-height: 25px;
+    padding: 0;
+    height: auto; /* Adjusted to allow flexible height based on content */
+    display: flex;
+    flex-direction: row; /* Display in rows */
+    align-items: center; /* Align items in the center vertically */
+    border-bottom: 1px solid #ccc; /* Optional: Add a border between folders */
+    padding: 8px; /* Optional: Add padding for better spacing */
+  }
+  .profile-folder-wrapper{
+    margin-left: 10px;
+    color: var(--main-gray);
+  }
+  .folder-icon{
+    filter: invert(36%) sepia(8%) saturate(28%) hue-rotate(3deg) brightness(97%) contrast(93%);
+    height: 30px;
+    left: 0;
+    position: relative;
+    top: 0;
+    width: 30px;
+  }
+
+  .profile-grid-container {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(134px, 134px)); /* Adjust the minmax values as needed */
+    grid-template-rows: repeat(5, minmax(134px, 134px));
+    
+    gap: 16px; /* Adjust the gap between grid items */
+  }
+  
+  .profile-grid-item {
+    border-radius: 8px;
+  }
+  
+  .profile-post-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Preserve aspect ratio */
+    border-radius: 8px; /* Match the border-radius of the parent div */
+  }
+  .selected-folder {
+    background-color: var(--main-black); /* Set the red background for the selected folder */
+  }
