@@ -23,9 +23,22 @@ function Profile(){
     const[selectedFolderPosts, setSelectedFolderPosts] = useState([]);
 
     useEffect(() => {
-        const fetchFolders = axios.get(api + 'Folder/AllUserFolders/' + user.sub);
+        const fetchFolders = axios.get(api + 'Folder/AllUserFolders/' + userId);
         fetchFolders.then(Response =>{
-            setFolders(Response.data);
+
+            if(userId === user.sub){
+                setFolders(Response.data)
+            }else{
+                for(const folder of Response.data){
+
+                    if(folder.isPublic){
+                        setFolders([...folders, folder])
+    
+                    }
+                }
+            }
+
+            
         })
 
         const fetchName = axios.get(api + 'User/' + userId)
@@ -52,11 +65,13 @@ function Profile(){
         setSelectedFolderPosts([]);
     }
 
-    const ToggleFolder =(id)=>{
-        setSelectedFolder(id);
+    const ToggleFolder =(folder)=>{
+
+        setSelectedFolder(folder);
+        
         setSelectedFolderPosts([]);
 
-        const fetchFolderCon = axios.get(api + 'Folder_Post/AllOfFolder/' + id);
+        const fetchFolderCon = axios.get(api + 'Folder_Post/AllOfFolder/' + folder.id);
         fetchFolderCon.then(Response =>{
             const connect = Response.data;
 
@@ -75,6 +90,56 @@ function Profile(){
             });
         })
         console.log(selectedFolderPosts);
+    }
+
+    const DeletePost =(id)=>{
+
+        const fetchFolderCon = axios.delete(api + 'Post/' + id);
+        fetchFolderCon.then(Response =>{
+            window.location.reload();
+            
+        }).catch(error =>{
+            console.log(error)
+        })
+        
+    }
+
+    const DeleteFolder =()=>{
+        if(selectedFolder){
+
+            const fetchFolderCon = axios.delete(api + 'Folder/' + selectedFolder.id);
+            fetchFolderCon.then(Response =>{
+                window.location.reload();
+                
+            }).catch(error =>{
+                console.log(error)
+            })
+        }
+        
+    }
+
+    const handlePostClic = (id) => {
+        nav(`/viewpost/${id}`);
+
+    }
+    const toggleFolderPublic = () =>{
+        if(selectedFolder){
+            const updatedFolder = { ...selectedFolder, isPublic: !selectedFolder.isPublic };
+            
+            // Create a new array with the updated folder
+            const updatedFolders = folders.map(folder =>
+                folder.id === updatedFolder.id ? updatedFolder : folder
+            );
+
+            
+            const postFolder = axios.put(api+'Folder', updatedFolder)
+            postFolder.then(response =>{
+                setSelectedFolder(updatedFolder)
+                setFolders(updatedFolders);
+
+            })
+            postFolder.then()
+        }
     }
 
     return(
@@ -118,9 +183,10 @@ function Profile(){
 
                                 {folders.map((folder) => (
                                     <div key={folder.id} 
-                                    className={`profile-folder-grid ${selectedFolder === folder.id ? 'selected-folder' : ''}`}
+                                    onClick={()=> ToggleFolder(folder)}
+                                    className={`profile-folder-grid ${selectedFolder  && selectedFolder.id === folder.id ? 'selected-folder' : ''}`}
+                                    >
 
-                                    onClick={()=> ToggleFolder(folder.id)}>
                                         <img className="folder-icon" alt="Frame" src={img + '/folder.svg'} />
                                     
                                         <div className="profile-folder-wrapper">
@@ -138,12 +204,33 @@ function Profile(){
                     </div>
                     <div className="overlap-3">
                         <div className="rectangle-2" />
+                        {tab === 2 && selectedFolder && selectedFolder.name !== 'favorite' ? 
+                            <div className="folder-settings">
+                                 <input
+                                    className="folder-radio"
+                                    type="checkbox"
+                                    checked={selectedFolder.isPublic}
+                                    onChange={() => toggleFolderPublic()}
+                                />
+                                <input className="folder-delete-button" onClick={DeleteFolder} type='button' value="Delete"/>
+                            </div>
+                            :
+                            <>
+                            </>
+                            }
                         <div className="group-6">
                             {tab === 1 ? 
                             <div className="profile-grid-container">
                                 {posts.map((post) => (
                                     <div key={post.id} className="profile-grid-item" >
-                                        <img className="profile-post-img" src={post.location} alt={post.name} />
+                                        <img className="trashcan-icon" 
+                                            alt="Frame" 
+                                            onClick={()=>DeletePost(post.id)}
+                                            src={`${img}/trash-can-outline.svg`} />
+
+                                        <img className="profile-post-img" 
+                                        src={post.location} alt={post.name} 
+                                        onClick={()=>handlePostClic(post.id)}/>
                                         {/* <img className="heart-icon" alt="Frame" src={heart} /> */}
                                     </div>
                                     
@@ -153,7 +240,9 @@ function Profile(){
                             <div className="profile-grid-container">
                                 {selectedFolderPosts.map((post) => (
                                     <div key={post.id} className="profile-grid-item" >
-                                        <img className="profile-post-img" src={post.location} alt={post.name} />
+                                        <img className="profile-post-img" src={post.location} 
+                                        alt={post.name} 
+                                        onClick={()=>handlePostClic(post.id)}/>
                                         {/* <img className="heart-icon" alt="Frame" src={heart} /> */}
                                     </div>
                                     
