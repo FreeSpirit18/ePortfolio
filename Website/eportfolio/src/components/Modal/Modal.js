@@ -8,7 +8,16 @@ import axios from 'axios';
 export default function Modal({ postId }) {
   const acc = process.env.PUBLIC_URL ;
   const api = process.env.REACT_APP_API;
-  const user = jwtDecode(localStorage.getItem('AuthToken'));
+  const Token = localStorage.getItem('AuthToken');
+
+  const [user, setUser] = useState();
+    // console.log(user['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'])
+    
+  useEffect(()=>{
+      if(Token){
+          setUser(jwtDecode(Token));
+      }
+  },[])
   const [checkedFolders, setCheckedFolders] = useState([]);
   const [modal, setModal] = useState(false);
   const [createOn, setCreateOn] = useState(false);
@@ -17,12 +26,15 @@ export default function Modal({ postId }) {
 
 
   useEffect(() => {
-    const fetchPost = axios.get(api + 'Folder/AllUserFolders/' + user.sub);
-    fetchPost.then(Response =>{
-      setFolders(Response.data);
-    })
+    if(user){
+      const fetchPost = axios.get(api + 'Folder/AllUserFolders/' + user.sub);
+      fetchPost.then(Response =>{
+        setFolders(Response.data);
+      })
+
+    }
     
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     

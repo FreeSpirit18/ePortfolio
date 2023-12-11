@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TaskBar from '../components/TaskBar';
 import '../styles/Post.css';
 import { jwtDecode } from 'jwt-decode'
@@ -12,7 +12,16 @@ function Post() {
     const [title, setTitle] = useState('');
     const [caption, setCaption] = useState('');
     const [tags, setTags] = useState('');
-    const user = jwtDecode(localStorage.getItem('AuthToken'));
+    const Token = localStorage.getItem('AuthToken');
+
+    const [user, setUser] = useState();
+    // console.log(user['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'])
+    
+    useEffect(()=>{
+        if(Token){
+            setUser(jwtDecode(Token));
+        }
+    },[])
     const nav = useNavigate();
 
     const handleImageChange = (event) => {

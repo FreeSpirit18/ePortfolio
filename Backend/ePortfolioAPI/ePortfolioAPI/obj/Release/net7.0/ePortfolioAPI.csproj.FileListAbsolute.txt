@@ -105,3 +105,4 @@ C:\Users\admin\Documents\GitHub\ePortfolio\Backend\ePortfolioAPI\ePortfolioAPI\o
 C:\Users\admin\Documents\GitHub\ePortfolio\Backend\ePortfolioAPI\ePortfolioAPI\bin\Release\net7.0\Azure.Storage.Blobs.dll
 C:\Users\admin\Documents\GitHub\ePortfolio\Backend\ePortfolioAPI\ePortfolioAPI\bin\Release\net7.0\Azure.Storage.Common.dll
 C:\Users\admin\Documents\GitHub\ePortfolio\Backend\ePortfolioAPI\ePortfolioAPI\bin\Release\net7.0\System.IO.Hashing.dll
+C:\Users\admin\Documents\GitHub\ePortfolio\Backend\ePortfolioAPI\ePortfolioAPI\obj\Release\net7.0\ePortfolioAPI.sourcelink.json

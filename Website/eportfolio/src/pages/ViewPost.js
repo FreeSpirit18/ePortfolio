@@ -10,8 +10,33 @@ import Modal from "../components/Modal/Modal";
 function ViewPost(){
     const api = process.env.REACT_APP_API;
     const acc = process.env.PUBLIC_URL ;
-    const user = jwtDecode(localStorage.getItem('AuthToken'));
     const nav = useNavigate();
+    const Token = localStorage.getItem('AuthToken');
+
+
+    const [user, setUser] = useState();
+    // console.log(user['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'])
+    
+    useEffect(()=>{
+        if(Token){
+            setUser(jwtDecode(Token));
+        }
+    },[])
+
+    useEffect(() => {
+        if(user){
+
+            const fetchFave =  axios.get(api + 'Folder/ByUser/' + user.sub);
+    
+            Promise.all([fetchFave])
+                .then(([faveResponse]) => {
+                    setfaveId(faveResponse.data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+      }, [user]);
 
     const{postId} = useParams();
     const [post, setPost] = useState(null);
@@ -26,13 +51,11 @@ function ViewPost(){
     useEffect(() => {
         const fetchPost = axios.get(api + 'Post/' + postId);
         const fetchArtist = fetchPost.then(response => axios.get(api + 'User/' + response.data.ownerId));
-        const fetchFave = fetchPost.then(response => axios.get(api + 'Folder/ByUser/' + user.sub));
 
-        Promise.all([fetchPost, fetchArtist, fetchFave])
-            .then(([postResponse, artistResponse, faveResponse]) => {
+        Promise.all([fetchPost, fetchArtist])
+            .then(([postResponse, artistResponse]) => {
                 setPost(postResponse.data);
                 setArtistName(artistResponse.data);
-                setfaveId(faveResponse.data);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);

@@ -1,9 +1,20 @@
 import { jwtDecode } from 'jwt-decode';
 import '../styles/TaskBar.css'
 import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 function TaskBar(){
-    const Token = jwtDecode(localStorage.getItem('AuthToken'));
+    const Token = localStorage.getItem('AuthToken');
+
+    const [user, setUser] = useState();
+    // console.log(user['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'])
+    
+    useEffect(()=>{
+        if(Token){
+            setUser(jwtDecode(Token));
+        }
+    },[])
+
     const nav = useNavigate();
     const Login = () =>{
         nav('/login');
@@ -18,8 +29,14 @@ function TaskBar(){
         nav('/');
     }
     const GoToProfile = () =>{
-        nav(`/profile/${Token.sub}`);
+        nav(`/profile/${user.sub}`);
     }
+
+    const GoToAdmin = () =>{
+        nav(`/admin`);
+    }
+
+    
 //Search works
     return(
         <>
@@ -34,11 +51,25 @@ function TaskBar(){
                     </div>
 
                     
-                    {Token ? (
+                    {user ? (
                             // Render the existing content when 'AuthToken' is present
+                            
                             <>
+                            {user['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] ==='Admin' ? (
+                            // Render the existing content when 'AuthToken' is present
+                                <>
                                 <div className="div">
-                                    <img className="frame" alt="Frame" src={process.env.PUBLIC_URL + '/bell.svg'} />
+                                    <button className="group-wrapper" onClick={GoToAdmin}>
+                                        <div className="group-2">
+                                            <div className="text-wrapper-2">Admin page</div>
+                                        </div>
+                                    </button>
+                                    
+                                </div>
+                                </>
+                            ) : (
+                                <>
+                                <div className="div">
                                     <button className="group-wrapper" onClick={Post}>
                                         <div className="group-2">
                                             <img className="img" alt="Frame" src={process.env.PUBLIC_URL + '/plus.svg'} />
@@ -49,6 +80,10 @@ function TaskBar(){
                                         <img onClick={GoToProfile} className="frame-2" alt="Frame" src={process.env.PUBLIC_URL + '/account.svg'} />
                                     </div>
                                 </div>
+                                </>
+                                
+                            )}
+                                
                             </>
                         ) : (
                             <>
