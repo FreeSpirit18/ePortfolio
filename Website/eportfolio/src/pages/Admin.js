@@ -1,9 +1,24 @@
+import { jwtDecode } from "jwt-decode";
 import TaskBar from "../components/TaskBar";
 import '../styles/Admin.css'
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from 'axios';
 
 function Admin(){
     const api = process.env.REACT_APP_API;
     const img = process.env.PUBLIC_URL;
+    const user = jwtDecode(localStorage.getItem('AuthToken'));
+    const nav = useNavigate();
+
+    const [users, setUsers] = useState();
+
+    useEffect(()=>{
+        // const fetchUsers = axios.get(api + 'User')
+        // fetchUsers.then(Response => {
+        //     setUsers(Response.data);
+        // })
+    },[]);
 
     return(
         <>

@@ -8,7 +8,7 @@ import axios from 'axios';
 function Profile(){
     const api = process.env.REACT_APP_API;
     const img = process.env.PUBLIC_URL;
-    const acc = process.env.PUBLIC_URL ;
+    
     const user = jwtDecode(localStorage.getItem('AuthToken'));
     const nav = useNavigate();
 
