@@ -51,9 +51,10 @@ function Profile(){
     }, []);
 
     useEffect(() => {
-        const fetchPost = axios.get(api + 'Post/AllOfUser/' + user.sub);
+        const fetchPost = axios.get(api + 'Post/AllOfUser/' + userId);
         fetchPost.then(Response =>{
             setPosts(Response.data);
+            console.log(Response.data);
         })
     
     }, []);
@@ -223,10 +224,13 @@ function Profile(){
                             <div className="profile-grid-container">
                                 {posts.map((post) => (
                                     <div key={post.id} className="profile-grid-item" >
-                                        <img className="trashcan-icon" 
-                                            alt="Frame" 
-                                            onClick={()=>DeletePost(post.id)}
-                                            src={`${img}/trash-can-outline.svg`} />
+                                        {userId === user.sub ? 
+                                        (<img className="trashcan-icon" 
+                                        alt="Frame" 
+                                        onClick={()=>DeletePost(post.id)}
+                                        src={`${img}/trash-can-outline.svg`} />):
+                                        (<></>)}
+                                        
 
                                         <img className="profile-post-img" 
                                         src={post.location} alt={post.name} 

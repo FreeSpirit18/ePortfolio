@@ -38,13 +38,7 @@
   width: 169px;
 }
 
-.box .div {
-  height: 43px;
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 290px;
-}
+
 
 .box .frame {
   filter: invert(100%) sepia(1%) saturate(3202%) hue-rotate(291deg) brightness(113%) contrast(81%);
@@ -56,15 +50,7 @@
   width: 33px;
 }
 
-.group-wrapper {
-  background: linear-gradient(180deg, var(--main-red) 0%, var(--main-white) 180%);
-  border-radius: 5px;
-  height: 41px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 186px;
-}
+
 
 .box .group-2 {
   height: 35px;
@@ -96,15 +82,7 @@
   width: 127px;
 }
 
-.box .frame-wrapper {
-  background-color: var(--main-white);
-  border-radius: 21.5px;
-  height: 43px;
-  left: 247px;
-  position: absolute;
-  top: 0;
-  width: 43px;
-}
+
 
 .box .frame-2 {
   height: 38px;
@@ -141,7 +119,15 @@
   top: 3px;
   width: 32px;
 }
-
+.button-bar {
+  display: flex;
+  height: 43px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 340px;
+  justify-content: space-between;
+}
 .search-Input {
   background: transparent;
   border: none;
@@ -167,6 +153,17 @@
   right: 100px;
   width: 100px;
 }
+.logout-button{
+  font-family: "Inter-Bold", Helvetica;
+  font-size: 15px;
+  font-weight: 700;
+  background: linear-gradient(180deg, var(--main-red) 0%, var(--main-white) 180%);  
+  height: 35px;
+  position: relative;
+  top: 5px;
+  /* right: 100px; */
+  width: 100px;
+}
 .register-button{
   font-family: "Inter-Bold", Helvetica;
   font-size: 15px;
@@ -177,4 +174,21 @@
   top: 10px;
   right: 0px;
   width: 100px;
+}
+.box .frame-wrapper {
+  background-color: var(--main-white);
+  border-radius: 21.5px;
+  height: 43px;
+  position: relative;
+  top: 0;
+  width: 43px;
+}
+.group-wrapper {
+  background: linear-gradient(180deg, var(--main-red) 0%, var(--main-white) 180%);
+  border-radius: 5px;
+  height: 41px;
+  left: 0;
+  position: relative;
+  top: 0;
+  width: 186px;
 }

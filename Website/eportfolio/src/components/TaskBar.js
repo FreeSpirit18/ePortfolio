@@ -35,6 +35,11 @@ function TaskBar(){
     const GoToAdmin = () =>{
         nav(`/admin`);
     }
+    const LogOut = () =>{
+        localStorage.removeItem('AuthToken')
+        nav(`/`);
+        window.location.reload();
+    }
 
     
 //Search works
@@ -58,7 +63,10 @@ function TaskBar(){
                             {user['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] ==='Admin' ? (
                             // Render the existing content when 'AuthToken' is present
                                 <>
-                                <div className="div">
+                                <div className="button-bar">
+                                <button className="logout-button" onClick={LogOut}>
+                                        LogOut
+                                    </button>
                                     <button className="group-wrapper" onClick={GoToAdmin}>
                                         <div className="group-2">
                                             <div className="text-wrapper-2">Admin page</div>
@@ -69,7 +77,11 @@ function TaskBar(){
                                 </>
                             ) : (
                                 <>
-                                <div className="div">
+                                
+                                <div className="button-bar">
+                                    <button className="logout-button" onClick={LogOut}>
+                                        LogOut
+                                    </button>
                                     <button className="group-wrapper" onClick={Post}>
                                         <div className="group-2">
                                             <img className="img" alt="Frame" src={process.env.PUBLIC_URL + '/plus.svg'} />

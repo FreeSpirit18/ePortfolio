@@ -125,10 +125,20 @@ function ViewPost(){
             postId: post.id
           });
           handleLike.then(responce =>{
-            //window.location.reload();
+            const handleLiked = axios.post(api + "Folder_Post/Exists",{
+                id: 0,
+                folderId: faveId,
+                postId: post.id
+                });
+                handleLiked.then(responce =>{
+                    setLiked(responce.data)
+                }).catch(error =>{
+                    console.error("IsLiked error: ", error)
+                });
             }).catch(error =>{
             console.error("Comment submit error: ", error)
             });
+        
         const handleUpdate = axios.put(api + "Post",{
             id: post.id,
             ownerId: post.ownerId,
@@ -139,13 +149,14 @@ function ViewPost(){
             creationDate: "2023-09-29T12:36:59.681Z"
           });
             handleUpdate.then(responce =>{
-            window.location.reload();
+            // window.location.reload();
             }).catch(error =>{
             console.error("Comment submit error: ", error)
             })
       }
 
       const  UnLike = async ()=>{
+        setLiked();
         const handleLike = axios.delete(api + "Folder_Post/"+liked.id);
 
           handleLike.then(responce =>{
@@ -162,7 +173,7 @@ function ViewPost(){
             creationDate: "2023-09-29T12:36:59.681Z"
           });
             handleUpdate.then(responce =>{
-            window.location.reload();
+            // window.location.reload();
             }).catch(error =>{
             console.error("Comment submit error: ", error)
             })
@@ -182,8 +193,9 @@ function ViewPost(){
                     </div>
                     <div className="overlap">
                         <div className="rectangle-2" />
-                        {liked === null ? (<img className="img" alt="Frame" src={acc + '/heart-outline.svg'} onClick={Like}/>):
-                        (<img className="img" alt="Frame" src={acc + '/full-heart.svg'} onClick={UnLike}/>)}
+                        {liked ? 
+                        (<img className="img" alt="Frame" src={acc + '/full-heart.svg'} onClick={UnLike}/>):
+                        (<img className="img" alt="Frame" src={acc + '/heart-outline.svg'} onClick={Like}/>)}
                         
                         <div className="text-wrapper">{post.name}
                         </div>
