@@ -56,7 +56,7 @@ function Post() {
         handlePost.then(Response =>{
 
             console.log(Response);
-            nav('/profile');
+            nav('/profile/'+user.sub);
 
         }).catch(error => {
             // Handle errors, e.g., display an error message to the user
