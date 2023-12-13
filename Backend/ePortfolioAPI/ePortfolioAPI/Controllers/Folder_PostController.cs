@@ -32,6 +32,16 @@ namespace ePortfolioAPI.Controllers
             }
             return Ok(folder_post);
         }
+        [HttpGet("AllOfFolder/{id}")]
+        public async Task<ActionResult<List<Folder_Post>>> AllOfFolderGet(int id)
+        {
+            var folder_posts = await _dbContext.Folder_Post.Where(p => p.FolderId == id).ToListAsync();
+            if (folder_posts == null)
+            {
+                return BadRequest("Folder_Post not found.");
+            }
+            return Ok(folder_posts);
+        }
 
         [HttpPost]
         public async Task<ActionResult<List<Folder_Post>>> Post(Folder_Post folder_post)
@@ -58,6 +68,22 @@ namespace ePortfolioAPI.Controllers
             _dbContext.Folder_Post.Add(folder_post);
             await _dbContext.SaveChangesAsync();
             return Ok(await _dbContext.Folder_Post.ToListAsync());
+        }
+        [HttpPost("Exists")]
+        public async Task<ActionResult<List<Folder_Post>>> Exists(Folder_Post folder_post)
+        {
+            //------Foreig key check-------------------------------
+
+            var existingConnection = await _dbContext.Folder_Post.FirstOrDefaultAsync(
+                t => t.FolderId == folder_post.FolderId && t.PostId == folder_post.PostId
+                );
+
+            if (existingConnection == null)
+                return Conflict("Connection dose not exist.");
+
+            //---------------------------------------------------------
+
+            return Ok(existingConnection);
         }
 
         [HttpPut]
@@ -93,6 +119,21 @@ namespace ePortfolioAPI.Controllers
             if (dbFolder_Post == null)
                 return BadRequest("Folder_Post not found");
             _dbContext.Folder_Post.Remove(dbFolder_Post);
+            await _dbContext.SaveChangesAsync();
+            return Ok(await _dbContext.Folder_Post.ToListAsync());
+        }
+
+        [HttpDelete("ByMatch")]
+        public async Task<ActionResult<List<Folder_Post>>> DeleteByMatch(Folder_Post folder_post)
+        {
+            var existingConnection = await _dbContext.Folder_Post.FirstOrDefaultAsync(
+                t => t.FolderId == folder_post.FolderId && t.PostId == folder_post.PostId
+                );
+
+            if (existingConnection == null)
+                return Conflict("Connection dose not exist.");
+
+            _dbContext.Folder_Post.Remove(existingConnection);
             await _dbContext.SaveChangesAsync();
             return Ok(await _dbContext.Folder_Post.ToListAsync());
         }

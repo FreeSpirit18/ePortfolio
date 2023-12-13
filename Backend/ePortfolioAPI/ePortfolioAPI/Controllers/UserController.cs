@@ -111,6 +111,32 @@ namespace ePortfolioAPI.Controllers
             return Ok(new SuccessfulLoginDto(accessToken));
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<User>>> Get(int id)
+        {
+            var user = await _dbContext.User.FindAsync(id);
+            if (user == null)
+            {
+                return BadRequest("User not found.");
+            }
+            return Ok(user.UserName);
+        }
+        [HttpGet]
+        public async Task<ActionResult<List<DataDto>>> Get()
+        {
+            var users = await _dbContext.User.ToListAsync();
+            // Map the User entities to UserDto to exclude unnecessary information
+            var userDtos = users.Select(user => new DataDto
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Role = user.Role,
+                JoinDate = user.JoinDate
+            }).ToList();
+
+            return Ok(userDtos);
+        }
+
         [HttpPut]
         [Authorize]
         public async Task<ActionResult<List<User>>> Put(UserDto req)

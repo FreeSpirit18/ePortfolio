@@ -34,6 +34,27 @@ namespace ePortfolioAPI.Controllers
             return Ok(comment);
         }
 
+        [HttpGet("ByPostId/{Id}")]
+        public async Task<ActionResult<List<Comment>>> GetByPostId(int Id)
+        {
+            var comments = await _dbContext.Comment.Where(c => c.SubjectId == Id).ToListAsync();
+            if (comments == null)
+            {
+                return BadRequest("Comment's not found.");
+            }
+            return Ok(comments);
+        }
+        [HttpGet("AllOfUser/{id}")]
+        public async Task<ActionResult<List<Comment>>> GetAllOfUser(int id)
+        {
+            var comments = await _dbContext.Comment.Where(p => p.AuthorId == id).ToListAsync();
+            if (comments == null)
+            {
+                return BadRequest("Comment's not found.");
+            }
+            return Ok(comments);
+        }
+
         [HttpPost]
         public async Task<ActionResult<List<Comment>>> Post(Comment comment)
         {

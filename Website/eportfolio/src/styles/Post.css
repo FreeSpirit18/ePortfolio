@@ -1,0 +1,234 @@
+.post {
+    background-color: #1c1c1c;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .div {
+    background-color: var(--main-black);
+    display: flex;
+    position: absolute;
+
+    flex-direction: row;
+    height: 1024px;
+    width: 2000px;
+  }
+  .post-form{
+    width: 603px;
+    height: 100%;
+    margin-left: 35%;
+  }
+  .post .overlap {
+    
+    background-color: var(--secondary-black);
+    height: 223px;
+    left: 0;
+    position: absolute;
+    top: 58px;
+    width: 100%;
+  }
+  
+  .group {
+    background-color: var(--main-red);
+    border-radius: 50px;
+    height: 59px;
+    left: 0px;
+    position: relative;
+    top: 56px;
+    width: 420px;
+  }
+  
+  .post .group-2 {
+    height: 44px;
+    left: 121px;
+    position: relative;
+    top: 7px;
+    width: 179px;
+  }
+  
+  .post .frame {
+    height: 44px;
+    left: 0;
+    position: relative;
+    top: 0;
+    width: 400px;
+  }
+
+  .add-image {
+    height: 44px;
+    left: 0px;
+    position: relative;
+    top: 8px;
+    width: 80px;
+  }
+  
+  .post .text-wrapper {
+    color: #ffffff;
+    font-family: "Inter-Bold", Helvetica;
+    font-size: 24px;
+    font-weight: 700;
+    height: 29px;
+    left: 0px;
+    width: 300px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    text-align: center;
+    top: 0px;
+  }
+  
+  .post .JPEG-GIF-PNG-you-can {
+    color: #ffffff;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    height: 39px;
+    left: 0px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    top: 60px;
+    width: 413px;
+  }
+  
+  .post .overlap-group {
+    background-color: var(--secondary-black);
+    border-radius: 5px;
+    height: 146px;
+    
+    position: relative;
+    top: 333px;
+    width: 603px;
+  }
+  
+  .post .line {
+    height: 1px;
+    left: 5px;
+    object-fit: cover;
+    position: absolute;
+    top: 31px;
+    width: 593px;
+  }
+  .text-wrapper-2, .text-wrapper-3, .text-wrapper-4 {
+    color: var(--main-white);
+    }
+ .text-wrapper-2 {
+  border: none;
+    background: transparent;
+    font-family: "Inter-SemiBold", Helvetica;
+    font-size: 15px;
+    font-weight: 600;
+    height: 20px;
+    left: 10px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    width: 90%;
+    top: 5px;
+    white-space: nowrap;
+  }
+  
+.text-wrapper-3 {
+    text-align: left;
+    background: transparent;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 14px;
+    font-weight: 400;
+    height: 65%;
+    left: 5px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 42px;
+    overflow: scroll;
+    white-space: nowrap;
+    width: 95%;
+    border: none;
+
+  }
+
+  .post .div-wrapper {
+    background-color: var(--secondary-black);
+    border-radius: 5px;
+    height: 51px;
+    position: relative;
+    top: 370px;
+    width: 603px;
+  }
+  
+  .post .text-wrapper-4 {
+    border: none;
+    text-align: left;
+    background: transparent;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 14px;
+    font-weight: 400;
+    height: 60%;
+    left: 5px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 10px;
+    white-space: nowrap;
+    width: 95%;
+  }
+  .image-select{
+    text-align: center;
+    width: 420px;
+    height: 200px;
+    margin-left: 40%;
+  }
+  .p {
+    color: var(--main-gray);
+    font-family: "Inter-SemiBold", Helvetica;
+    font-size: 14px;
+    font-weight: 600;
+    height: 28px;
+    left: 0px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    text-align: center;
+    top: 280px;
+    width: 136px;
+  }
+  
+  .post .overlap-group-wrapper {
+    height: 32px;
+    left: 910px;
+    position: absolute;
+    top: 574px;
+    width: 113px;
+  }
+  
+  .overlap-group-2 {
+    left: 85%;
+    top: 400px;
+    background-color: var(--main-red);
+    border: 1px solid;
+    border-color: var(--main-gray);
+    height: 32px;
+    position: relative;
+    width: 111px;
+  }
+  
+  .post .text-wrapper-5 {
+    color: #ffffff;
+    font-family: "Inter-SemiBold", Helvetica;
+    font-size: 15px;
+    font-weight: 600;
+    height: 18px;
+    left: 12px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 6px;
+    white-space: nowrap;
+  }
+  
