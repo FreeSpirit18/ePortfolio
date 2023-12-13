@@ -2,13 +2,24 @@ import { jwtDecode } from 'jwt-decode';
 import '../styles/TaskBar.css'
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { NavLink } from "react-router-dom";
+
 
 function TaskBar(){
     const Token = localStorage.getItem('AuthToken');
 
+    const [menuOpen, setMenuOpen] = useState(false);
+
     const [user, setUser] = useState();
+
     // console.log(user['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'])
     
+
+ 
+
+    // create an event listener
+    useEffect(() => {
+    })
     useEffect(()=>{
         if(Token){
             setUser(jwtDecode(Token));
@@ -16,26 +27,9 @@ function TaskBar(){
     },[])
 
     const nav = useNavigate();
-    const Login = () =>{
-        nav('/login');
-    }
-    const Register = () =>{
-        nav('/register');
-    }
-    const Post = () =>{
-        nav('/post');
-    }
-    const GoHome = () =>{
-        nav('/');
-    }
-    const GoToProfile = () =>{
-        nav(`/profile/${user.sub}`);
-    }
-
-    const GoToAdmin = () =>{
-        nav(`/admin`);
-    }
+    
     const LogOut = () =>{
+        console.log('log')
         localStorage.removeItem('AuthToken')
         nav(`/`);
         window.location.reload();
@@ -45,53 +39,47 @@ function TaskBar(){
 //Search works
     return(
         <>
-        <div className="box">
-            <div className="group">
-                <div className="overlap-group">
-                    <text className="text-wrapper" onClick={GoHome}>ePortfolio</text>
-
-                    <div  className="search-wrapper">
-                        <img className="frame-3" alt="Frame" src={process.env.PUBLIC_URL + '/magnify.svg'} />
-                        <input type='text' placeholder='Search works' className="search-Input"/>
-                    </div>
-
-                    
-                    {user ? (
+        <nav>
+                <Link to="/" className="title">
+                    ePortfolio
+                </Link>
+                <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul className={menuOpen ? "open" : ""}>
+                {user ? (
                             // Render the existing content when 'AuthToken' is present
                             
                             <>
                             {user['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] ==='Admin' ? (
                             // Render the existing content when 'AuthToken' is present
                                 <>
-                                <div className="button-bar">
-                                <button className="logout-button" onClick={LogOut}>
-                                        LogOut
-                                    </button>
-                                    <button className="group-wrapper" onClick={GoToAdmin}>
-                                        <div className="group-2">
-                                            <div className="text-wrapper-2">Admin page</div>
-                                        </div>
-                                    </button>
-                                    
-                                </div>
+                                <li>
+                                <NavLink to="/">Home</NavLink>
+                                </li>
+                                <li>
+                                <NavLink to="/admin">Admin page</NavLink>
+                                </li>
+                                <li>
+                                    <a onClick={LogOut}>Log Out</a>
+                                </li>
                                 </>
                             ) : (
                                 <>
-                                
-                                <div className="button-bar">
-                                    <button className="logout-button" onClick={LogOut}>
-                                        LogOut
-                                    </button>
-                                    <button className="group-wrapper" onClick={Post}>
-                                        <div className="group-2">
-                                            <img className="img" alt="Frame" src={process.env.PUBLIC_URL + '/plus.svg'} />
-                                            <div className="text-wrapper-2">Post your work</div>
-                                        </div>
-                                    </button>
-                                    <div className="frame-wrapper">
-                                        <img onClick={GoToProfile} className="frame-2" alt="Frame" src={process.env.PUBLIC_URL + '/account.svg'} />
-                                    </div>
-                                </div>
+                                <li>
+                                <NavLink to="/">Home</NavLink>
+                                </li>
+                                <li>
+                                <NavLink to="/post">Post you're wors</NavLink>
+                                </li>
+                                <li>
+                                <NavLink to={`/profile/${user.sub}`}>Profile</NavLink>
+                                </li>
+                                <li>
+                                    <a onClick={LogOut}>Log Out</a>
+                                </li>
                                 </>
                                 
                             )}
@@ -99,19 +87,25 @@ function TaskBar(){
                             </>
                         ) : (
                             <>
+                                <li>
+                                <NavLink to="/">Home</NavLink>
+                                </li>
+                                <li>
+                                <NavLink to="/login">Log in</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/register">register</NavLink>
 
-                                <button className="login-button" onClick={Login}>
-                                    Login
-                                </button>
-                                <button className="register-button" onClick={Register}>
-                                  Register
-                                </button>
+                                </li>
+                                
                             </>
                             
                         )}
-                </div>
-            </div>
-        </div>
+                    
+
+                </ul>
+                </nav>
+        
         </>
     )
 }

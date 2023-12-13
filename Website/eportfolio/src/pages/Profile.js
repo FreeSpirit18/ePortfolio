@@ -9,11 +9,20 @@ function Profile(){
     const api = process.env.REACT_APP_API;
     const img = process.env.PUBLIC_URL;
     
-    const user = jwtDecode(localStorage.getItem('AuthToken'));
+    const Token = localStorage.getItem('AuthToken');
+
+
+    const [user, setUser] = useState();
+    // console.log(user['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'])
+    
+    useEffect(()=>{
+        if(Token){
+            setUser(jwtDecode(Token));
+        }
+    },[])
     const nav = useNavigate();
 
     const{userId} = useParams();
-    // const userName = axios.get(api + 'User/' + userId).data;
 
     const[userName, setUserName] = useState([]);
     const[folders, setFolders] = useState([]);
@@ -26,7 +35,8 @@ function Profile(){
         const fetchFolders = axios.get(api + 'Folder/AllUserFolders/' + userId);
         fetchFolders.then(Response =>{
 
-            if(userId === user.sub){
+
+            if(user && userId === user.sub){
                 setFolders(Response.data)
             }else{
                 for(const folder of Response.data){
@@ -147,7 +157,7 @@ function Profile(){
         <>
             <TaskBar/>
             <div className="profile">
-                <div className="div">
+                <div className="main-body">
                     <div className="overlap">
                         <div className="overlap-group">
                             <div className="rectangle" />
@@ -224,7 +234,7 @@ function Profile(){
                             <div className="profile-grid-container">
                                 {posts.map((post) => (
                                     <div key={post.id} className="profile-grid-item" >
-                                        {userId === user.sub ? 
+                                        {user && userId === user.sub ? 
                                         (<img className="trashcan-icon" 
                                         alt="Frame" 
                                         onClick={()=>DeletePost(post.id)}

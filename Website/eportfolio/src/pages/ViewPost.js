@@ -45,7 +45,6 @@ function ViewPost(){
     const [comment, setComment] = useState("");
     const [faveId, setfaveId] = useState("");
     const [liked, setLiked] = useState(null);
-    const [foldersVis, setFoldersVis] = useState(false);
 
 
     useEffect(() => {
@@ -193,18 +192,28 @@ function ViewPost(){
                     </div>
                     <div className="overlap">
                         <div className="rectangle-2" />
+                        {user ? (
+                        <>
                         {liked ? 
                         (<img className="img" alt="Frame" src={acc + '/full-heart.svg'} onClick={UnLike}/>):
                         (<img className="img" alt="Frame" src={acc + '/heart-outline.svg'} onClick={Like}/>)}
+                        <Modal postId={post.id}/>
+                        </>
+                        ):(
+                            <></>
+                        )}
                         
-                        <div className="text-wrapper">{post.name}
+                        
+                        <div className="text-wrapper">
+                            {post.name}
                         </div>
                         <div className="rectangle-3" />
                         <p className="lorem-ipsum-is">
                             {post.description}
                         </p>
-                        <div className="text-wrapper-2">#digital #fantasy #portrait</div>
-                        <Modal postId={post.id}/>
+                        <div className="text-wrapper-2">
+                            #digital #fantasy #portrait
+                            </div>
                     </div>
                     <div className="overlap-group">
                         <div className="frame-wrapper">
