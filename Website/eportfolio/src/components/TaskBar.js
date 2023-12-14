@@ -72,7 +72,7 @@ function TaskBar(){
                                 <NavLink to="/">Home</NavLink>
                                 </li>
                                 <li>
-                                <NavLink to="/post">Post you're wors</NavLink>
+                                <NavLink to="/post">Post you're works</NavLink>
                                 </li>
                                 <li>
                                 <NavLink to={`/profile/${user.sub}`}>Profile</NavLink>

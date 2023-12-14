@@ -71,7 +71,7 @@ namespace ePortfolioAPI.Controllers
             if (existingPost == null)
             {
                 // A tag with the same name already exists, return a conflict response
-                return Conflict("Post dose not exist.");
+                return Conflict("Comment dose not exist.");
             }
 
             var comments = await _dbContext.Comment.ToListAsync();

@@ -224,6 +224,8 @@ function ViewPost(){
                     </div>
                     <div className="overlap-group-2">
                         <div className="text-wrapper-5">Comments</div>
+                        {user ? (
+                        <>
                         <form className="overlap-2">
 
                             <input 
@@ -240,6 +242,11 @@ function ViewPost(){
                             onClick={SubmitComment}/>
 
                         </form>
+                        </>
+                        ):(
+                            <></>
+                        )}
+                        
 
                         <div className="comment-grid">
 
